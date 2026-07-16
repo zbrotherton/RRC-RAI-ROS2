@@ -1,0 +1,125 @@
+{
+    // Onshape assembly URL
+    "url": "https://cad.onshape.com/documents/11a7f59e37f711d732274fca/w/7807518dc67487ad405722c8/e/5233c6445c575366a6cc0d50",
+    // Output format: urdf or mujoco (required)
+    "output_format": "urdf",
+    // Output filename (default: "robot")
+    // Extension (.urdf, .xml) will be added automatically
+    "output_filename": "robot",
+    // Assets directory (default: "assets")
+    "assets_directory": "assets",
+
+    // If you don't use "url", you can alternatively specify the following
+    // The Onshape document id to parse, see "getting started" (optional)
+    "document_id": "document-id",
+    // The document version id (optional)
+    "version_id": "version-id",
+    // The workspace id (optional)
+    "workspace_id": "workspace-id",
+    // Element id (optional)
+    "element_id": "element-id",
+    // Assembly name to use in the document (optional)
+    "assembly_name": "robot",
+
+    // Onshape configuration to use (default: "default")
+    "configuration": "Configuration=BigFoot;RodLength=50mm",
+    // Robot name (default: "onshape")
+    "robot_name": "robot",
+
+    // Ignore limits (default: false)
+    "ignore_limits": true,
+
+    // Parts to ignore (default: {})
+    "ignore": {
+        // Ignore visual for visual
+        "part1": "visual",
+        "screw*": "visual",
+
+        // Ignore everything expect "leg" for collision
+        "*" : "collision"
+        "!leg": "collision"
+    },
+
+    // Whether to keep frame links (default: false)
+    "draw_frames": true,
+    // Override the color of all links (default: None)
+    "color": [0.5, 0.1, 0.1],
+
+    // Disable dynamics retrieval (default: false)
+    "no_dynamics": true,
+
+    // Whether to include configuration suffix to part (stl) files (default: true)
+    "include_configuration_suffix": false,
+
+    // Post import commands (default: [])
+    "post_import_commands" [
+        "echo 'Import done'",
+        "echo 'Do something else'"
+    ],
+
+    // Custom processors
+    "processors": [
+        "my_project.my_custom_processor:MyCustomProcessor"
+    ],
+
+    // Number of decimals to round numerical values (default: 12)
+    "round_decimals": 12
+
+    // More options available in specific exporters (URDF, SDF, MuJoCo)
+    // More options available in processors
+
+    // Package name (for ROS) (default: "")
+    "package_name": "my_robot",
+    // Additional XML file to be included in the URDF (default: "")
+    "additional_xml": "my_custom_file.xml",
+    // Exclude inertial data for fixed bodies (default: false)
+    "set_zero_mass_to_fixed": true,
+
+    // Override joint properties (default: {})
+    "joint_properties": {
+        // Default properties for all joints
+        "*": {
+            "max_effort": 10.0,
+            "max_velocity": 6.0,
+            "friction": 0.5
+        },
+        // Set the properties for a specific joint
+        "joint_name": {
+            "max_effort": 20.0,
+            "max_velocity": 10.0,
+            "friction": 0.1,
+            "limits": [0.5, 1.2]
+        },
+        "wheel": {
+            "type": "continuous"
+        }
+    },
+
+    // Override geometry properties (default: {})
+    "geom_properties": {
+        // Set properties for specific links using pattern matching
+        "tibia": {
+            "collision": {
+                "mu1": "1.2",
+                "mu2": "0.8"
+            }
+        },
+        // Wildcard patterns are supported
+        "leg_*": {
+            "visual": {
+                "material": "leg_material"
+            }
+        }
+    },
+    
+
+    "merge_stls": false,
+    
+    "simplify_stls": false,
+    "max_stl_size": 3
+
+    // Simplify STL meshes (default: false)
+    "use_scads": true,
+    // Can be used to enlarge/shrink the pure shapes (default: 0.0)
+    "pure_shape_dilatation": 0.0
+}
