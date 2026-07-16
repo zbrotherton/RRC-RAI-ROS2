@@ -35,6 +35,14 @@ RUN if $SIM_ENABLED ; then \
             ros-humble-teleop-twist-keyboard \
             # External terminal
             gnome-terminal dbus-x11 ; \
+            # Onshape-to-robot dependency
+            openscad
+
+        # Onshape-to-robot dependencies
+        pip install \
+            onshape-to-robot \
+            pybullet \
+            pymeshlab 
     fi
 
 ENV SHELL=/bin/bash
