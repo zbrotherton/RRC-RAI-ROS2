@@ -49,3 +49,12 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
+
+# .vscode
+*.db*
+c_cpp_properties.json
+settings.json
+
+# ROS2 stuff
+install
+log
