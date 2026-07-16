@@ -28,22 +28,18 @@ RUN apt-get install -y \
 
 ## Simulation only
 RUN if $SIM_ENABLED ; then \
-        apt-get install -y \
+        apt-get update && apt-get install -y \
             # RQT packages
             ros-humble-rqt-tf-tree ros-humble-rqt-graph ros-humble-rqt-image-view \
             # Teleop control keyboard
             ros-humble-teleop-twist-keyboard \
             # External terminal
-            gnome-terminal dbus-x11 ; \
-            # Onshape-to-robot dependency
-            openscad
-
+            gnome-terminal dbus-x11 \
+            # Onshape-to-robot dependencies
+            openscad && \
         # Onshape-to-robot dependencies
-        pip install \
-            onshape-to-robot \
-            pybullet \
-            pymeshlab 
-    fi
+        pip install --no-cache-dir --upgrade pip setuptools wheel && \
+        pip install --no-cache-dir pybullet onshape-to-robot pymeshlab ; fi
 
 ENV SHELL=/bin/bash
 
