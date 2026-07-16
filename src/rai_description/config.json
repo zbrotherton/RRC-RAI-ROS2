@@ -1,0 +1,39 @@
+{
+    "url": "https://cad.onshape.com/documents/0031347e35259bad3644cd10/w/d8bc605a845f2cbf0a2bf906/e/505574f5a252a810f9e25346",
+    "output_format": "urdf",
+    "output_filename": "robot",
+    "assets_directory": "assets",
+
+    "configuration": "default",
+    "robot_name": "robot",
+
+    "package_name": "rai_description",
+    "additional_xml": "my_custom_file.xml",
+    
+    "set_zero_mass_to_fixed": true,
+
+    "joint_properties": {
+        "*": {
+            "max_effort": 10.0,
+            "max_velocity": 6.0,
+            "friction": 0.5
+        },
+        "joint_name": {
+            "max_effort": 20.0,
+            "max_velocity": 10.0,
+            "friction": 0.1,
+            "limits": [0.5, 1.2]
+        },
+        "wheel": {
+            "type": "continuous"
+        }
+    },
+    
+    "merge_stls": true,
+    
+    "simplify_stls": true,
+    "max_stl_size": 3,
+
+    "use_scads": true,
+    "pure_shape_dilatation": 0.0
+}
