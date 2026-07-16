@@ -37,6 +37,6 @@ RUN if $SIM_ENABLED ; then \
             gnome-terminal dbus-x11 ; \
     fi
 
-ENV SHELL /bin/bash
+ENV SHELL=/bin/bash
 
 CMD ["/bin/bash"]

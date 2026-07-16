@@ -1,4 +1,4 @@
-cd ~/2026RobotCode
+cd /home/ros2_ws
 
 apt-get update --fix-missing
 apt-get upgrade -y
@@ -7,7 +7,7 @@ apt-get upgrade -y
 
 echo '. /opt/ros/humble/setup.sh' >> ~/.bashrc
 
-echo ' if [ -d '~/2026RobotCode/install' ]; then 
-    . ~/2026RobotCode/install/setup.bash
+echo ' if [ -d '/home/ros2_ws/install' ]; then 
+    . /home/ros2_ws/install/setup.bash
 fi ' >> ~/.bashrc
 
