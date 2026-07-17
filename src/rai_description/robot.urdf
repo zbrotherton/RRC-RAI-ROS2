@@ -2,6 +2,14 @@
 <!-- Generated using onshape-to-robot -->
 <!-- Onshape https://cad.onshape.com/documents/0031347e35259bad3644cd10/w/d8bc605a845f2cbf0a2bf906/e/dc9663babf9f6681d6773ecc -->
 <robot name="robot">
+  <!-- Link base_link -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
   <!-- Link chassis -->
   <link name="chassis">
     <inertial>
@@ -310,5 +318,13 @@
     <axis xyz="0 0 1"/>
     <limit effort="10" velocity="6" lower="-3.141592653589793" upper="3.141592653589793"/>
     <joint_properties friction="0.5"/>
+  </joint>
+  <!-- Joint from base_link to chassis -->
+  <joint name="base_link_to_chassis" type="fixed">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <parent link="base_link"/>
+    <child link="chassis"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="10"/>
   </joint>
 </robot>
