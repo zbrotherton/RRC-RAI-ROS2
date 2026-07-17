@@ -6,7 +6,6 @@
 			"args": [
 				"build",
 				"--symlink-install",
-				"--packages-skip-regex",
 			],
 			"problemMatcher": [
 				"$colcon-gcc"
@@ -23,7 +22,6 @@
 			"args": [
 				"build",
 				"--symlink-install",
-				"--packages-skip-regex",
 				"--cmake-args",
 				"-DCMAKE_BUILD_TYPE=RelWithDebInfo"
 			],
