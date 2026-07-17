@@ -21,7 +21,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 -0 0"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/chassis_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/chassis_visual.stl"/>
       </geometry>
       <material name="chassis_parts_material">
         <color rgba="nan nan nan nan"/>
@@ -39,7 +39,7 @@
     <visual>
       <origin xyz="-0 -0 -0.00417976" rpy="-3.14159 -0 -2.7447"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/canvas_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/canvas_visual.stl"/>
       </geometry>
       <material name="canvas_parts_material">
         <color rgba="0.901961 0.901961 0.901961 1"/>
@@ -66,7 +66,7 @@
     <visual>
       <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 -1.41921"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/arm_gantry_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/arm_gantry_visual.stl"/>
       </geometry>
       <material name="arm_gantry_parts_material">
         <color rgba="0.117647 0.117647 0.117647 1"/>
@@ -96,7 +96,7 @@
     <visual>
       <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="-1.5708 0.900875 3.14159"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/arm_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/arm_visual.stl"/>
       </geometry>
       <material name="arm_parts_material">
         <color rgba="0.647059 0.647059 0.647059 1"/>
@@ -132,7 +132,7 @@
     <visual>
       <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 -3.03808"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/arm_gantry_2_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/arm_gantry_2_visual.stl"/>
       </geometry>
       <material name="arm_gantry_2_parts_material">
         <color rgba="0.117647 0.117647 0.117647 1"/>
@@ -162,7 +162,7 @@
     <visual>
       <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="-1.5708 -0.717995 3.14159"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/arm_2_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/arm_2_visual.stl"/>
       </geometry>
       <material name="arm_2_parts_material">
         <color rgba="0.647059 0.647059 0.647059 1"/>
@@ -198,7 +198,7 @@
     <visual>
       <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 1.48206"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/arm_gantry_3_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/arm_gantry_3_visual.stl"/>
       </geometry>
       <material name="arm_gantry_3_parts_material">
         <color rgba="0.117647 0.117647 0.117647 1"/>
@@ -228,7 +228,7 @@
     <visual>
       <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="1.5708 -0.660552 0"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/arm_3_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/arm_3_visual.stl"/>
       </geometry>
       <material name="arm_3_parts_material">
         <color rgba="0.647059 0.647059 0.647059 1"/>
@@ -264,7 +264,7 @@
     <visual>
       <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 0.0856695"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/arm_gantry_4_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/arm_gantry_4_visual.stl"/>
       </geometry>
       <material name="arm_gantry_4_parts_material">
         <color rgba="0.117647 0.117647 0.117647 1"/>
@@ -294,7 +294,7 @@
     <visual>
       <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="1.5708 0.735836 0"/>
       <geometry>
-        <mesh filename="package://rai_description/assets/merged/arm_4_visual.stl"/>
+        <mesh filename="package://rai_description/meshes/merged/arm_4_visual.stl"/>
       </geometry>
       <material name="arm_4_parts_material">
         <color rgba="0.647059 0.647059 0.647059 1"/>
