@@ -1,0 +1,13 @@
+{
+    "configuration": "default",
+    "documentId": "0031347e35259bad3644cd10",
+    "documentMicroversion": "99df3cc50ae1ecaca471ff2c",
+    "elementId": "6e887073e8e9439706f9d79c",
+    "fullConfiguration": "default",
+    "id": "M4dMkxJme7uef9VFj",
+    "isStandardContent": false,
+    "name": "Arm Gantry <4>",
+    "partId": "RBBD",
+    "suppressed": false,
+    "type": "Part"
+}
