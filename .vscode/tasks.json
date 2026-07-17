@@ -62,7 +62,7 @@
 		{
 			"label": "RAI: Open Pybullet Simulation",
 			"type": "shell",
-			"command": "onshape-to-robot-bullet src/rai_description/urdf/robot.urdf",
+			"command": "onshape-to-robot-bullet src/rai_description/urdf/rai.urdf",
 			"problemMatcher": [],
 		},
 	]
