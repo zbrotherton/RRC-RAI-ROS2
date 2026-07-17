@@ -59,5 +59,11 @@
 			"command": "onshape-to-robot src/rai_description/config.json --retrieve",
 			"problemMatcher": [],
 		},
+		{
+			"label": "RAI: Open Pybullet Simulation",
+			"type": "shell",
+			"command": "onshape-to-robot-bullet src/rai_description/robot.urdf",
+			"problemMatcher": [],
+		},
 	]
 }
