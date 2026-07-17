@@ -24,7 +24,7 @@
         <mesh filename="package://rai_description/meshes/merged/chassis_visual.stl"/>
       </geometry>
       <material name="chassis_parts_material">
-        <color rgba="nan nan nan nan"/>
+        <color rgba="0.6 0.6 0.6 1"/>
       </material>
     </visual>
   </link>
