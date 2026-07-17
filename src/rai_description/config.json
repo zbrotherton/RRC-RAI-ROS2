@@ -1,5 +1,5 @@
 {
-    "url": "https://cad.onshape.com/documents/0031347e35259bad3644cd10/w/d8bc605a845f2cbf0a2bf906/e/505574f5a252a810f9e25346",
+    "url": "https://cad.onshape.com/documents/0031347e35259bad3644cd10/w/d8bc605a845f2cbf0a2bf906/e/dc9663babf9f6681d6773ecc",
     "output_format": "urdf",
     "output_filename": "robot",
     "assets_directory": "assets",
@@ -8,7 +8,6 @@
     "robot_name": "robot",
 
     "package_name": "rai_description",
-    "additional_xml": "my_custom_file.xml",
     
     "set_zero_mass_to_fixed": true,
 
@@ -24,7 +23,7 @@
             "friction": 0.1,
             "limits": [0.5, 1.2]
         },
-        "wheel": {
+        "canvas_revolute": {
             "type": "continuous"
         }
     },

@@ -1,0 +1,314 @@
+<?xml version="1.0" ?>
+<!-- Generated using onshape-to-robot -->
+<!-- Onshape https://cad.onshape.com/documents/0031347e35259bad3644cd10/w/d8bc605a845f2cbf0a2bf906/e/dc9663babf9f6681d6773ecc -->
+<robot name="robot">
+  <!-- Link chassis -->
+  <link name="chassis">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+    <!-- Part chassis_parts -->
+    <visual>
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/chassis_visual.stl"/>
+      </geometry>
+      <material name="chassis_parts_material">
+        <color rgba="nan nan nan nan"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Link canvas -->
+  <link name="canvas">
+    <inertial>
+      <origin xyz="-0 -0 -0.00417976" rpy="0 0 0"/>
+      <mass value="4.35842"/>
+      <inertia ixx="0.10072" ixy="-0" ixz="0" iyy="0.10072" iyz="-0" izz="0.201392"/>
+    </inertial>
+    <!-- Part canvas_parts -->
+    <visual>
+      <origin xyz="-0 -0 -0.00417976" rpy="-3.14159 -0 -2.7447"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/canvas_visual.stl"/>
+      </geometry>
+      <material name="canvas_parts_material">
+        <color rgba="0.901961 0.901961 0.901961 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Joint from chassis to canvas -->
+  <joint name="canvas_revolute" type="continuous">
+    <origin xyz="-0 0 0.166624" rpy="-3.14159 0 -2.7447"/>
+    <parent link="chassis"/>
+    <child link="canvas"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="6"/>
+    <joint_properties friction="0.5"/>
+  </joint>
+  <!-- Link arm_gantry -->
+  <link name="arm_gantry">
+    <inertial>
+      <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 0"/>
+      <mass value="0.195145"/>
+      <inertia ixx="0.000351186" ixy="-1.6204e-05" ixz="-1.7487e-05" iyy="0.000355911" iyz="1.86021e-05" izz="0.000463081"/>
+    </inertial>
+    <!-- Part arm_gantry_parts -->
+    <visual>
+      <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 -1.41921"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/arm_gantry_visual.stl"/>
+      </geometry>
+      <material name="arm_gantry_parts_material">
+        <color rgba="0.117647 0.117647 0.117647 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Link arm -->
+  <link name="arm">
+    <inertial>
+      <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="0 0 0"/>
+      <mass value="0.516241"/>
+      <inertia ixx="0.0168399" ixy="6.40609e-07" ixz="-7.46351e-07" iyy="0.0167911" iyz="-0.000598726" izz="0.000155782"/>
+    </inertial>
+    <!-- Part arm_parts -->
+    <collision>
+      <origin xyz="0.000495216 0.0114549 -0.253727" rpy="1.5708 -1.5696 2e-12"/>
+      <geometry>
+        <box size="0.51 0.03 0.03"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.000450512 -0.0085451 -0.548781" rpy="1.5708 0.821505 0"/>
+      <geometry>
+        <cylinder length="0.06" radius="0.025"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="-1.5708 0.900875 3.14159"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/arm_visual.stl"/>
+      </geometry>
+      <material name="arm_parts_material">
+        <color rgba="0.647059 0.647059 0.647059 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Joint from arm_gantry to arm -->
+  <joint name="arm_slider_1" type="prismatic">
+    <origin xyz="-0.260844 0.242656 -0.0135128" rpy="-1.5708 0 0.821505"/>
+    <parent link="arm_gantry"/>
+    <child link="arm"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="6" lower="-0.277756" upper="0.0742877"/>
+    <joint_properties friction="0.5"/>
+  </joint>
+  <!-- Joint from chassis to arm_gantry -->
+  <joint name="arm_revolute_1" type="revolute">
+    <origin xyz="-0.306801 -0.306801 0.233705" rpy="-0 -0 1.41921"/>
+    <parent link="chassis"/>
+    <child link="arm_gantry"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="6" lower="-3.141592653589793" upper="3.141592653589793"/>
+    <joint_properties friction="0.5"/>
+  </joint>
+  <!-- Link arm_gantry_2 -->
+  <link name="arm_gantry_2">
+    <inertial>
+      <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 0"/>
+      <mass value="0.195145"/>
+      <inertia ixx="0.000351186" ixy="-1.6204e-05" ixz="-1.7487e-05" iyy="0.000355911" iyz="1.86021e-05" izz="0.000463081"/>
+    </inertial>
+    <!-- Part arm_gantry_2_parts -->
+    <visual>
+      <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 -3.03808"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/arm_gantry_2_visual.stl"/>
+      </geometry>
+      <material name="arm_gantry_2_parts_material">
+        <color rgba="0.117647 0.117647 0.117647 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Link arm_2 -->
+  <link name="arm_2">
+    <inertial>
+      <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="0 0 0"/>
+      <mass value="0.516241"/>
+      <inertia ixx="0.0168399" ixy="6.40609e-07" ixz="-7.46351e-07" iyy="0.0167911" iyz="-0.000598726" izz="0.000155782"/>
+    </inertial>
+    <!-- Part arm_2_parts -->
+    <collision>
+      <origin xyz="0.000495216 0.0114549 -0.253727" rpy="1.5708 -1.5696 2e-12"/>
+      <geometry>
+        <box size="0.51 0.03 0.03"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.000450512 -0.0085451 -0.548781" rpy="1.5708 0.821505 0"/>
+      <geometry>
+        <cylinder length="0.06" radius="0.025"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="-1.5708 -0.717995 3.14159"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/arm_2_visual.stl"/>
+      </geometry>
+      <material name="arm_2_parts_material">
+        <color rgba="0.647059 0.647059 0.647059 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Joint from arm_gantry_2 to arm_2 -->
+  <joint name="arm_slider_2" type="prismatic">
+    <origin xyz="-0.257023 0.239102 -0.0135128" rpy="-1.5708 0 0.821505"/>
+    <parent link="arm_gantry_2"/>
+    <child link="arm_2"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="6" lower="-0.272538" upper="0.0795063"/>
+    <joint_properties friction="0.5"/>
+  </joint>
+  <!-- Joint from chassis to arm_gantry_2 -->
+  <joint name="arm_revolute_2" type="revolute">
+    <origin xyz="0.306801 -0.306801 0.233705" rpy="-0 0 3.03808"/>
+    <parent link="chassis"/>
+    <child link="arm_gantry_2"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="6" lower="-3.141592653589793" upper="3.141592653589793"/>
+    <joint_properties friction="0.5"/>
+  </joint>
+  <!-- Link arm_gantry_3 -->
+  <link name="arm_gantry_3">
+    <inertial>
+      <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 0"/>
+      <mass value="0.195145"/>
+      <inertia ixx="0.000351186" ixy="-1.6204e-05" ixz="-1.7487e-05" iyy="0.000355911" iyz="1.86021e-05" izz="0.000463081"/>
+    </inertial>
+    <!-- Part arm_gantry_3_parts -->
+    <visual>
+      <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 1.48206"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/arm_gantry_3_visual.stl"/>
+      </geometry>
+      <material name="arm_gantry_3_parts_material">
+        <color rgba="0.117647 0.117647 0.117647 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Link arm_3 -->
+  <link name="arm_3">
+    <inertial>
+      <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="0 0 0"/>
+      <mass value="0.516241"/>
+      <inertia ixx="0.0168399" ixy="6.40609e-07" ixz="-7.46351e-07" iyy="0.0167911" iyz="-0.000598726" izz="0.000155782"/>
+    </inertial>
+    <!-- Part arm_3_parts -->
+    <collision>
+      <origin xyz="0.000495216 0.0114549 -0.253727" rpy="1.5708 -1.5696 2e-12"/>
+      <geometry>
+        <box size="0.51 0.03 0.03"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.000450512 -0.0085451 -0.548781" rpy="1.5708 0.821505 0"/>
+      <geometry>
+        <cylinder length="0.06" radius="0.025"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="1.5708 -0.660552 0"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/arm_3_visual.stl"/>
+      </geometry>
+      <material name="arm_3_parts_material">
+        <color rgba="0.647059 0.647059 0.647059 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Joint from arm_gantry_3 to arm_3 -->
+  <joint name="arm_slider_3" type="prismatic">
+    <origin xyz="-0.22511 0.209414 -0.0135128" rpy="-1.5708 0 0.821505"/>
+    <parent link="arm_gantry_3"/>
+    <child link="arm_3"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="6" lower="-0.228952" upper="0.123092"/>
+    <joint_properties friction="0.5"/>
+  </joint>
+  <!-- Joint from chassis to arm_gantry_3 -->
+  <joint name="arm_revolute_3" type="revolute">
+    <origin xyz="0.306801 0.306801 0.233705" rpy="0 -0 -1.48206"/>
+    <parent link="chassis"/>
+    <child link="arm_gantry_3"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="6" lower="-3.141592653589793" upper="3.141592653589793"/>
+    <joint_properties friction="0.5"/>
+  </joint>
+  <!-- Link arm_gantry_4 -->
+  <link name="arm_gantry_4">
+    <inertial>
+      <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 0"/>
+      <mass value="0.195145"/>
+      <inertia ixx="0.000351186" ixy="-1.6204e-05" ixz="-1.7487e-05" iyy="0.000355911" iyz="1.86021e-05" izz="0.000463081"/>
+    </inertial>
+    <!-- Part arm_gantry_4_parts -->
+    <visual>
+      <origin xyz="-0.00293932 0.00316323 -0.0259266" rpy="0 0 0.0856695"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/arm_gantry_4_visual.stl"/>
+      </geometry>
+      <material name="arm_gantry_4_parts_material">
+        <color rgba="0.117647 0.117647 0.117647 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Link arm_4 -->
+  <link name="arm_4">
+    <inertial>
+      <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="0 0 0"/>
+      <mass value="0.516241"/>
+      <inertia ixx="0.0168399" ixy="6.40609e-07" ixz="-7.46351e-07" iyy="0.0167911" iyz="-0.000598726" izz="0.000155782"/>
+    </inertial>
+    <!-- Part arm_4_parts -->
+    <collision>
+      <origin xyz="0.000495216 0.0114549 -0.253727" rpy="1.5708 -1.5696 2e-12"/>
+      <geometry>
+        <box size="0.51 0.03 0.03"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.000450512 -0.0085451 -0.548781" rpy="1.5708 0.821505 0"/>
+      <geometry>
+        <cylinder length="0.06" radius="0.025"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-1.47334e-05 0.00795093 -0.30668" rpy="1.5708 0.735836 0"/>
+      <geometry>
+        <mesh filename="package://rai_description/assets/merged/arm_4_visual.stl"/>
+      </geometry>
+      <material name="arm_4_parts_material">
+        <color rgba="0.647059 0.647059 0.647059 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- Joint from arm_gantry_4 to arm_4 -->
+  <joint name="arm_slider_4" type="prismatic">
+    <origin xyz="-0.173713 0.1616 -0.0135128" rpy="-1.5708 0 0.821505"/>
+    <parent link="arm_gantry_4"/>
+    <child link="arm_4"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="6" lower="-0.158753" upper="0.193291"/>
+    <joint_properties friction="0.5"/>
+  </joint>
+  <!-- Joint from chassis to arm_gantry_4 -->
+  <joint name="arm_revolute_4" type="revolute">
+    <origin xyz="-0.306801 0.306801 0.233705" rpy="-0 -0 -0.0856695"/>
+    <parent link="chassis"/>
+    <child link="arm_gantry_4"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="6" lower="-3.141592653589793" upper="3.141592653589793"/>
+    <joint_properties friction="0.5"/>
+  </joint>
+</robot>
