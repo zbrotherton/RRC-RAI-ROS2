@@ -50,7 +50,7 @@
 		{
 			"label": "RAI: Rebuild URDF",
 			"type": "shell",
-			"command": "onshape-to-robot src/rai_description/config.json --convert",
+			"command": "onshape-to-robot src/rai_description/config.json --convert && mv src/rai_description/rai_geometry.urdf src/rai_description/urdf/",
 			"problemMatcher": [],
 		},
 		{
