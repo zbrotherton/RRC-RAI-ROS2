@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!-- Generated using onshape-to-robot -->
 <!-- Onshape https://cad.onshape.com/documents/0031347e35259bad3644cd10/w/d8bc605a845f2cbf0a2bf906/e/dc9663babf9f6681d6773ecc -->
-<robot name="robot">
+<robot name="rai">
   <!-- Link base_link -->
   <link name="base_link">
     <inertial>
@@ -52,8 +52,7 @@
     <parent link="chassis"/>
     <child link="canvas"/>
     <axis xyz="0 0 1"/>
-    <limit effort="10" velocity="6"/>
-    <joint_properties friction="0.5"/>
+    <limit effort="1.45" velocity="157"/>
   </joint>
   <!-- Link arm_gantry -->
   <link name="arm_gantry">
@@ -103,14 +102,28 @@
       </material>
     </visual>
   </link>
+  <!-- Frame pen_1 (dummy link + fixed joint) -->
+  <link name="pen_1">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="pen_1_frame" type="fixed">
+    <origin xyz="0.0002 0.0313875 -0.549649" rpy="-1.5708 0.821505 -0"/>
+    <parent link="arm"/>
+    <child link="pen_1"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Joint from arm_gantry to arm -->
   <joint name="arm_slider_1" type="prismatic">
     <origin xyz="-0.260844 0.242656 -0.0135128" rpy="-1.5708 0 0.821505"/>
     <parent link="arm_gantry"/>
     <child link="arm"/>
     <axis xyz="0 0 1"/>
-    <limit effort="10" velocity="6" lower="-0.277756" upper="0.0742877"/>
-    <joint_properties friction="0.5"/>
+    <limit effort="90" velocity="0.25" lower="-0.277756" upper="0.0742877"/>
   </joint>
   <!-- Joint from chassis to arm_gantry -->
   <joint name="arm_revolute_1" type="revolute">
@@ -118,8 +131,7 @@
     <parent link="chassis"/>
     <child link="arm_gantry"/>
     <axis xyz="0 0 1"/>
-    <limit effort="10" velocity="6" lower="-3.141592653589793" upper="3.141592653589793"/>
-    <joint_properties friction="0.5"/>
+    <limit effort="0.61" velocity="157" lower="-3.141592653589793" upper="3.141592653589793"/>
   </joint>
   <!-- Link arm_gantry_2 -->
   <link name="arm_gantry_2">
@@ -169,14 +181,28 @@
       </material>
     </visual>
   </link>
+  <!-- Frame pen_2 (dummy link + fixed joint) -->
+  <link name="pen_2">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="pen_2_frame" type="fixed">
+    <origin xyz="0.0002 0.0313875 -0.549649" rpy="-1.5708 0.821505 -0"/>
+    <parent link="arm_2"/>
+    <child link="pen_2"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Joint from arm_gantry_2 to arm_2 -->
   <joint name="arm_slider_2" type="prismatic">
     <origin xyz="-0.257023 0.239102 -0.0135128" rpy="-1.5708 0 0.821505"/>
     <parent link="arm_gantry_2"/>
     <child link="arm_2"/>
     <axis xyz="0 0 1"/>
-    <limit effort="10" velocity="6" lower="-0.272538" upper="0.0795063"/>
-    <joint_properties friction="0.5"/>
+    <limit effort="90" velocity="0.25" lower="-0.272538" upper="0.0795063"/>
   </joint>
   <!-- Joint from chassis to arm_gantry_2 -->
   <joint name="arm_revolute_2" type="revolute">
@@ -184,8 +210,7 @@
     <parent link="chassis"/>
     <child link="arm_gantry_2"/>
     <axis xyz="0 0 1"/>
-    <limit effort="10" velocity="6" lower="-3.141592653589793" upper="3.141592653589793"/>
-    <joint_properties friction="0.5"/>
+    <limit effort="0.61" velocity="157" lower="-3.141592653589793" upper="3.141592653589793"/>
   </joint>
   <!-- Link arm_gantry_3 -->
   <link name="arm_gantry_3">
@@ -235,14 +260,28 @@
       </material>
     </visual>
   </link>
+  <!-- Frame pen_3 (dummy link + fixed joint) -->
+  <link name="pen_3">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="pen_3_frame" type="fixed">
+    <origin xyz="0.0002 0.0313875 -0.549649" rpy="-1.5708 0.821505 -0"/>
+    <parent link="arm_3"/>
+    <child link="pen_3"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Joint from arm_gantry_3 to arm_3 -->
   <joint name="arm_slider_3" type="prismatic">
     <origin xyz="-0.22511 0.209414 -0.0135128" rpy="-1.5708 0 0.821505"/>
     <parent link="arm_gantry_3"/>
     <child link="arm_3"/>
     <axis xyz="0 0 1"/>
-    <limit effort="10" velocity="6" lower="-0.228952" upper="0.123092"/>
-    <joint_properties friction="0.5"/>
+    <limit effort="90" velocity="0.25" lower="-0.228952" upper="0.123092"/>
   </joint>
   <!-- Joint from chassis to arm_gantry_3 -->
   <joint name="arm_revolute_3" type="revolute">
@@ -250,8 +289,7 @@
     <parent link="chassis"/>
     <child link="arm_gantry_3"/>
     <axis xyz="0 0 1"/>
-    <limit effort="10" velocity="6" lower="-3.141592653589793" upper="3.141592653589793"/>
-    <joint_properties friction="0.5"/>
+    <limit effort="0.61" velocity="157" lower="-3.141592653589793" upper="3.141592653589793"/>
   </joint>
   <!-- Link arm_gantry_4 -->
   <link name="arm_gantry_4">
@@ -301,14 +339,28 @@
       </material>
     </visual>
   </link>
+  <!-- Frame pen_4 (dummy link + fixed joint) -->
+  <link name="pen_4">
+    <origin xyz="0 0 0" rpy="0 -0 0"/>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="pen_4_frame" type="fixed">
+    <origin xyz="0.0002 0.0313875 -0.549649" rpy="-1.5708 0.821505 -0"/>
+    <parent link="arm_4"/>
+    <child link="pen_4"/>
+    <axis xyz="0 0 0"/>
+  </joint>
   <!-- Joint from arm_gantry_4 to arm_4 -->
   <joint name="arm_slider_4" type="prismatic">
     <origin xyz="-0.173713 0.1616 -0.0135128" rpy="-1.5708 0 0.821505"/>
     <parent link="arm_gantry_4"/>
     <child link="arm_4"/>
     <axis xyz="0 0 1"/>
-    <limit effort="10" velocity="6" lower="-0.158753" upper="0.193291"/>
-    <joint_properties friction="0.5"/>
+    <limit effort="90" velocity="0.25" lower="-0.158753" upper="0.193291"/>
   </joint>
   <!-- Joint from chassis to arm_gantry_4 -->
   <joint name="arm_revolute_4" type="revolute">
@@ -316,8 +368,7 @@
     <parent link="chassis"/>
     <child link="arm_gantry_4"/>
     <axis xyz="0 0 1"/>
-    <limit effort="10" velocity="6" lower="-3.141592653589793" upper="3.141592653589793"/>
-    <joint_properties friction="0.5"/>
+    <limit effort="0.61" velocity="157" lower="-3.141592653589793" upper="3.141592653589793"/>
   </joint>
   <!-- Joint from base_link to chassis -->
   <joint name="base_link_to_chassis" type="fixed">

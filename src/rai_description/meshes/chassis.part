@@ -1,13 +1,13 @@
 {
     "configuration": "default",
     "documentId": "0031347e35259bad3644cd10",
-    "documentMicroversion": "99df3cc50ae1ecaca471ff2c",
+    "documentMicroversion": "d7d21898b2bb7d4e4de67c91",
     "elementId": "6e887073e8e9439706f9d79c",
     "fullConfiguration": "default",
     "id": "MNXQZgpu6C6RrgKjd",
     "isStandardContent": false,
     "name": "Chassis <1>",
-    "partId": "Jkn",
+    "partId": "Jmn",
     "suppressed": false,
     "type": "Part"
 }
