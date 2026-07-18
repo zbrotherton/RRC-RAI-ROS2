@@ -58,3 +58,5 @@ settings.json
 # ROS2 stuff
 install
 log
+
+.env

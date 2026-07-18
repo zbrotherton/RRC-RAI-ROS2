@@ -1,0 +1,39 @@
+{
+    "url": "https://cad.onshape.com/documents/0031347e35259bad3644cd10/w/d8bc605a845f2cbf0a2bf906/e/dc9663babf9f6681d6773ecc",
+    "output_format": "urdf",
+    "output_filename": "rai_geometry",
+    "assets_directory": "meshes",
+
+    "configuration": "default",
+    "robot_name": "rai",
+
+    "package_name": "rai_description",
+    
+    "set_zero_mass_to_fixed": true,
+
+    "joint_properties": {
+        "arm_revolute_*": {
+            "max_effort": 0.61,
+            "max_velocity": 157
+        },
+        "arm_slider_*": {
+            "max_effort": 90,
+            "max_velocity": 0.25
+        },
+        "canvas_revolute": {
+            "max_effort": 1.45,
+            "max_velocity": 157,
+            "type": "continuous"
+        }
+    },
+    
+    "merge_stls": true,
+    
+    "simplify_stls": true,
+    "max_stl_size": 3,
+
+    "use_scads": true,
+    "pure_shape_dilatation": 0.0,
+
+    "add_dummy_base_link": true
+}

@@ -6,7 +6,6 @@
 			"args": [
 				"build",
 				"--symlink-install",
-				"--packages-skip-regex",
 			],
 			"problemMatcher": [
 				"$colcon-gcc"
@@ -23,7 +22,6 @@
 			"args": [
 				"build",
 				"--symlink-install",
-				"--packages-skip-regex",
 				"--cmake-args",
 				"-DCMAKE_BUILD_TYPE=RelWithDebInfo"
 			],
@@ -46,6 +44,24 @@
 				"$colcon-gcc"
 			],
 			"label": "colcon: Colcon Build Debug"
-		}
+		},
+		{
+			"label": "RAI: Rebuild URDF",
+			"type": "shell",
+			"command": "onshape-to-robot src/rai_description/config.json --convert && mv src/rai_description/rai_geometry.urdf src/rai_description/urdf/",
+			"problemMatcher": [],
+		},
+		{
+			"label": "RAI: Pull URDF (API CREDITS)",
+			"type": "shell",
+			"command": "onshape-to-robot src/rai_description/config.json --retrieve",
+			"problemMatcher": [],
+		},
+		{
+			"label": "RAI: Open Pybullet Simulation",
+			"type": "shell",
+			"command": "onshape-to-robot-bullet src/rai_description/urdf/rai_geometry.urdf",
+			"problemMatcher": [],
+		},
 	]
 }
