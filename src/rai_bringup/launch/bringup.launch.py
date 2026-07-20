@@ -9,6 +9,7 @@ from launch_ros.substitutions import FindPackageShare
 def generate_launch_description():
     use_sim = LaunchConfiguration('use_sim')
     use_mock_hardware = LaunchConfiguration('use_mock_hardware')
+    headless_gazebo = LaunchConfiguration('headless_gazebo')
 
     return LaunchDescription([
         # Launch Arguments
@@ -21,6 +22,11 @@ def generate_launch_description():
             'use_mock_hardware',
             default_value=use_sim,
             description='Mock hardware'
+        ),
+        DeclareLaunchArgument(
+            'headless_gazebo',
+            default_value='false',
+            description='Run Gazebo physics only'
         ),
 
         # Publishers & URDF
@@ -55,6 +61,9 @@ def generate_launch_description():
                  '/empty_world.launch.py'
                 ]
             ),
+            launch_arguments={
+                'headless_gazebo': headless_gazebo
+            }.items(),
             condition=IfCondition(use_sim),
         ),
     ])

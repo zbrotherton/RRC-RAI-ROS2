@@ -5,17 +5,17 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, SetEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, IfElseSubstitution
 from launch_ros.actions import Node
 
 def generate_launch_description():
     ros_gz_sim_package = get_package_share_directory('ros_gz_sim')
     rai_description_package = os.path.realpath(os.path.join(get_package_share_directory('rai_description'), ".."))
-    print(rai_description_package)
 
     gz_launch_path = os.path.join(ros_gz_sim_package, 'launch', 'gz_sim.launch.py')
 
     world = LaunchConfiguration('world')
+    headless_gazebo_config = LaunchConfiguration('headless_gazebo')
 
     default_world = os.path.join(
         get_package_share_directory('rai_gazebo'),
@@ -28,10 +28,18 @@ def generate_launch_description():
         default_value=default_world,
         description='World to load'
     )
+    
+    headless_gazebo_arg = DeclareLaunchArgument(
+        'headless_gazebo',
+        default_value='true',
+        description='Run Gazebo physics only'
+    )
+    
+    headless_gazebo = IfElseSubstitution(headless_gazebo_config,  if_value="-s ", else_value="")
 
     gazebo = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(gz_launch_path),
-            launch_arguments={'gz_args': ['-r -v4 ', world], 'on_exit_shutdown': 'true'}.items()
+            launch_arguments={'gz_args': ['-r -v4 ', headless_gazebo, world], 'on_exit_shutdown': 'true'}.items()
     )
     
     set_resource_env = SetEnvironmentVariable(
@@ -60,6 +68,7 @@ def generate_launch_description():
     return LaunchDescription([
         set_resource_env,
         world_arg,
+        headless_gazebo_arg,
         gazebo,
         spawn_entity,
         ros_gz_bridge
