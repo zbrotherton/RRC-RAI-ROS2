@@ -63,5 +63,17 @@
 			"command": "onshape-to-robot-bullet src/rai_description/urdf/rai_geometry.urdf",
 			"problemMatcher": [],
 		},
+		{
+			"label": "RAI: Bringup Simulated Robot",
+			"type": "shell",
+			"command": "source install/setup.bash; ros2 launch rai_bringup bringup.launch.py use_sim:=true",
+			"problemMatcher": [],
+		},
+		{
+			"label": "RAI: Bringup Simulated Robot (Headless Gazebo)",
+			"type": "shell",
+			"command": "source install/setup.bash; ros2 launch rai_bringup bringup.launch.py use_sim:=true headless_gazebo:=true",
+			"problemMatcher": [],
+		}
 	]
 }
