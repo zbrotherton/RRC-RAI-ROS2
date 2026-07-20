@@ -13,4 +13,10 @@
         <parent link="world"/>
         <child link="base_link"/>
     </joint>
+
+    <gazebo>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <parameters>$(find rai_control)/config/ros2_controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
 </robot>
