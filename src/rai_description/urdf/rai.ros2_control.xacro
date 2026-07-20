@@ -3,20 +3,19 @@
 
   <xacro:macro name="arm_macro" params="id use_sim use_mock_hardware">
     <ros2_control name="arm_${id}" type="system">
-
-      <xacro:unless value="${use_mock_hardware}">
+      <xacro:unless value="$(arg use_mock_hardware)">
         <hardware>
           <plugin></plugin> #TODO Placeholder for real hardware
         </hardware>
       </xacro:unless>
 
-      <xacro:if value="${use_mock_hardware and use_sim}">
+      <xacro:if value="${$(arg use_mock_hardware) and $(arg use_sim)}">
         <hardware>
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
         </hardware>
       </xacro:unless>
 
-      <xacro:if value="${use_mock_hardware and not use_sim}">
+      <xacro:if value="${$(arg use_mock_hardware) and not $(arg use_sim)}">
         <hardware>
           <plugin>mock_components/GenericSystem</plugin>
         </hardware>
@@ -37,36 +36,29 @@
   </xacro:macro>
 
   <ros2_control name="canvas" type="system">
+    <xacro:unless value="$(arg use_mock_hardware)">
+      <hardware>
+        <plugin></plugin> #TODO Placeholder for real hardware
+      </hardware>
+    </xacro:unless>
 
-      <xacro:unless value="${use_mock_hardware}">
-        <hardware>
-          <plugin></plugin> #TODO Placeholder for real hardware
-        </hardware>
-      </xacro:unless>
+    <xacro:if value="${$(arg use_mock_hardware) and $(arg use_sim)}">
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+    </xacro:unless>
 
-      <xacro:if value="${use_mock_hardware and use_sim}">
-        <hardware>
-          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-        </hardware>
-      </xacro:unless>
+    <xacro:if value="${$(arg use_mock_hardware) and not $(arg use_sim)}">
+      <hardware>
+        <plugin>mock_components/GenericSystem</plugin>
+      </hardware>
+    </xacro:unless>
 
-      <xacro:if value="${use_mock_hardware and not use_sim}">
-        <hardware>
-          <plugin>mock_components/GenericSystem</plugin>
-        </hardware>
-      </xacro:unless>
-
-      <joint name="$arm_revolute_${id}">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-      </joint>
-
-      <joint name="$arm_slider_${id}">
-        <command_interface name="position"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-      </joint>
-    </ros2_control>
-
+    <joint name="$canvas_revolute">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+  
 </robot>
