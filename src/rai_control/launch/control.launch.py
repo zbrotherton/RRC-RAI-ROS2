@@ -17,7 +17,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             name="use_sim",
             default_value="false",
-            description="Wether or not the robot is launching in simulation"
+            description="Run in simulation"
         )
     )
     
@@ -26,9 +26,9 @@ def generate_launch_description():
     # Get nodes
     robot_controllers = PathJoinSubstitution(
         [
-            FindPackageShare("igvc_hardware"),
+            FindPackageShare("rai_control"),
             "config",
-            "bot_controllers.yaml",
+            "ros2_controllers.yaml",
         ]
     )
 
@@ -36,21 +36,11 @@ def generate_launch_description():
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[
-            # TODO in the ODrive botwheel explorer example, the description contents are also passed in here.
             robot_controllers
         ],
         output="both",
         condition = UnlessCondition(use_sim)
     )
-
-    robot_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["bot_drive_controller",
-                   "--controller-manager", "/controller_manager", "--switch-timeout", "20.0"],
-        remappings=[('~/cmd_vel','/cmd_vel')]
-    )
-    
     
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
@@ -58,20 +48,23 @@ def generate_launch_description():
         arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager", "--switch-timeout", "20.0"],
     )
 
-    
-    delay_robot_controller_spawner_after_joint_state_broadcaster_spawner = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=joint_state_broadcaster_spawner,
-            on_exit=[robot_controller_spawner],
-        )
+    joint_trajectory_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_trajectory_controller", "--controller-manager", "/controller_manager", "--switch-timeout", "20.0"],
     )
-
-
+    
+    velocity_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_trajectory_controller", "--controller-manager", "/controller_manager", "--switch-timeout", "20.0"],
+    )
 
     nodes = [
         control_node,
         joint_state_broadcaster_spawner,
-        robot_controller_spawner
+        joint_trajectory_controller_spawner,
+        velocity_controller_spawner
     ]
 
     return LaunchDescription(declared_arguments + nodes)

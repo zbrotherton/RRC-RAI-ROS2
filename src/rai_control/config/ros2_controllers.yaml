@@ -11,7 +11,6 @@ controller_manager:
     velocity_controller:
       type: velocity_controllers/JointGroupVelocityController
 
-
 joint_trajectory_controller:
   ros__parameters:
     joints:
