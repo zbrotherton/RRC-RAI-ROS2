@@ -1,7 +1,20 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="bot_ros2_control" params="name prefix use_mock_hardware">
+  <xacro:macro name="arm_revolute_macro" params="prefix id use_mock_hardware">
+    <ros2_control name="${prefix}_${name}_HW" type="system">
+      <hardware>
+        <plugin>ros2_control_demo_hardware/MySystemHardware</plugin>
+      </hardware>
+      <joint name="${prefix}_${name}_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+  </xacro:macro>
+
+  <xacro:macro name="rai_ros2_control" params="name prefix use_mock_hardware">
 
     <ros2_control name="${name}" type="system">
       <!-- Physical hardware plugin-->
