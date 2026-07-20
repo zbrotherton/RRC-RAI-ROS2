@@ -68,4 +68,16 @@ def generate_launch_description():
             }.items(),
             condition=IfCondition(use_sim),
         ),
+        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [FindPackageShare('rai_control'),
+                 '/launch',
+                 '/control.launch.py'
+                ]
+            ),
+            launch_arguments={
+                'use_sim': use_sim
+            }.items()
+        ),
     ])
