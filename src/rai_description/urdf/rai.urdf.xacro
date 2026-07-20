@@ -4,4 +4,10 @@
     <!-- Include generated urdf -->
     <xacro:include filename="$(find rai_description)/urdf/rai_geometry.urdf" />
 
+    <link name="world"/>
+
+    <joint name="world_fixed" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+    </joint>
 </robot>
