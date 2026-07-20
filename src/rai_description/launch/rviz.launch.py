@@ -27,7 +27,8 @@ def generate_launch_description():
   rviz_config_file = LaunchConfiguration('rviz_config_file')
   use_robot_state_pub = LaunchConfiguration('use_robot_state_pub')
   use_rviz = LaunchConfiguration('use_rviz')
-  use_sim_time = LaunchConfiguration('use_sim_time')
+  use_sim = LaunchConfiguration('use_sim')
+  use_mock_hardware = LaunchConfiguration('use_mock_hardware')
 
   # Declare the launch arguments  
   declare_urdf_model_path_cmd = DeclareLaunchArgument(
@@ -55,10 +56,17 @@ def generate_launch_description():
     default_value='true',
     description='Whether to start RVIZ')
     
-  declare_use_sim_time_cmd = DeclareLaunchArgument(
-    name='use_sim_time',
-    default_value='True',
-    description='Use simulation (Gazebo) clock if true')
+  declare_use_sim_cmd = DeclareLaunchArgument(
+    'use_sim',
+    default_value='false',
+    description='Run in simulation'
+  )
+  
+  declare_use_mock_hardware_cmd = DeclareLaunchArgument(
+    'use_mock_hardware',
+    default_value=use_sim,
+    description='Use mock hardware'
+  )
    
   # Specify the publisher action
   start_publisher_cmd = IncludeLaunchDescription(
@@ -67,7 +75,8 @@ def generate_launch_description():
           'urdf_model' : urdf_model,
           'gui' : gui,
           'use_robot_state_pub' : use_robot_state_pub,
-          'use_sim_time' : use_sim_time,
+          'use_sim' : use_sim,
+          'use_mock_hardware' : use_mock_hardware
         }.items()
     )
 
@@ -89,7 +98,8 @@ def generate_launch_description():
   launch_description.add_action(declare_use_joint_state_publisher_cmd)
   launch_description.add_action(declare_use_robot_state_pub_cmd)  
   launch_description.add_action(declare_use_rviz_cmd) 
-  launch_description.add_action(declare_use_sim_time_cmd)
+  launch_description.add_action(declare_use_sim_cmd)
+  launch_description.add_action(declare_use_mock_hardware_cmd)
 
   # Add any actions
   launch_description.add_action(start_publisher_cmd)

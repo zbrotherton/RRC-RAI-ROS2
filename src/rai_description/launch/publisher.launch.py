@@ -18,7 +18,8 @@ def generate_launch_description():
   gui = LaunchConfiguration('gui')
   urdf_model = LaunchConfiguration('urdf_model')
   use_robot_state_pub = LaunchConfiguration('use_robot_state_pub')
-  use_sim_time = LaunchConfiguration('use_sim_time')
+  use_sim = LaunchConfiguration('use_sim')
+  use_mock_hardware = LaunchConfiguration('use_mock_hardware')
 
   # Declare the launch arguments  
   declare_urdf_model_path_cmd = DeclareLaunchArgument(
@@ -35,11 +36,18 @@ def generate_launch_description():
     name='use_robot_state_pub',
     default_value='True',
     description='Whether to start the robot state publisher')
-
-  declare_use_sim_time_cmd = DeclareLaunchArgument(
-    name='use_sim_time',
-    default_value='False',
-    description='Use simulation (Gazebo) clock if true')
+  
+  declare_use_sim_cmd = DeclareLaunchArgument(
+    'use_sim',
+    default_value='false',
+    description='Run in simulation'
+  )
+  
+  declare_use_mock_hardware_cmd = DeclareLaunchArgument(
+    'use_mock_hardware',
+    default_value=use_sim,
+    description='Use mock hardware'
+  )
    
   # Specify the actions
   
@@ -61,11 +69,12 @@ def generate_launch_description():
     condition=IfCondition(use_robot_state_pub),
     package='robot_state_publisher',
     executable='robot_state_publisher',
-    parameters=[{'use_sim_time': use_sim_time, 
+    parameters=[{'use_sim_time': use_sim, 
     'robot_description': Command(
       [
         'xacro ', urdf_model,
-        ' use_mock_hardware:=', LaunchConfiguration('use_mock_hardware')
+        ' use_sim:= ', use_sim,
+        ' use_mock_hardware:= ', use_mock_hardware
        ]
       ),
     }],
@@ -78,24 +87,14 @@ def generate_launch_description():
   )
 
   # Create the launch description and populate
-  # Create the launch description and populate
-  launch_description = LaunchDescription(
-    [
-        DeclareLaunchArgument(
-            'use_mock_hardware',
-            default_value='false',
-            description='Run in Simulation'
-        ),
-
-    ]
-  )
-
+  launch_description = LaunchDescription()
 
   # Declare the launch options
   launch_description.add_action(declare_urdf_model_path_cmd)
   launch_description.add_action(declare_use_joint_state_publisher_cmd)
   launch_description.add_action(declare_use_robot_state_pub_cmd)  
-  launch_description.add_action(declare_use_sim_time_cmd)
+  launch_description.add_action(declare_use_sim_cmd)
+  launch_description.add_action(declare_use_mock_hardware_cmd)
 
   # Add any actions
   launch_description.add_action(start_foxglove_bridge_cmd)

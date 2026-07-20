@@ -21,7 +21,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'use_mock_hardware',
             default_value=use_sim,
-            description='Mock hardware'
+            description='Use mock hardware'
         ),
         DeclareLaunchArgument(
             'headless_gazebo',
@@ -37,6 +37,7 @@ def generate_launch_description():
                  '/publisher.launch.py']
             ),
             launch_arguments={
+                'use_sim' : use_sim,
                 'use_mock_hardware': use_mock_hardware
             }.items(),
             condition=UnlessCondition(use_sim)
@@ -49,6 +50,7 @@ def generate_launch_description():
                  '/rviz.launch.py']
             ),
             launch_arguments={
+                'use_sim' : use_sim,
                 'use_mock_hardware': use_mock_hardware
             }.items(),
             condition=IfCondition(use_sim)
