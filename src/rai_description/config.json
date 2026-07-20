@@ -6,6 +6,7 @@
 
     "configuration": "default",
     "robot_name": "rai",
+    "package_name": "rai_description",
     
     "set_zero_mass_to_fixed": true,
 
