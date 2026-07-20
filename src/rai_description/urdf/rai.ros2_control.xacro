@@ -9,17 +9,19 @@
         </hardware>
       </xacro:unless>
 
-      <xacro:if value="${$(arg use_mock_hardware) and $(arg use_sim)}">
-        <hardware>
-          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-        </hardware>
-      </xacro:unless>
+      <xacro:if value="$(arg use_mock_hardware)">
+        <xacro:if value="$(arg use_sim)">
+          <hardware>
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+          </hardware>
+        </xacro:if>
 
-      <xacro:if value="${$(arg use_mock_hardware) and not $(arg use_sim)}">
-        <hardware>
-          <plugin>mock_components/GenericSystem</plugin>
-        </hardware>
-      </xacro:unless>
+        <xacro:unless value="$(arg use_sim)">
+          <hardware>
+            <plugin>mock_components/GenericSystem</plugin>
+          </hardware>
+        </xacro:unless>
+      </xacro:if>
 
       <joint name="$arm_revolute_${id}">
         <command_interface name="position"/>
@@ -47,17 +49,19 @@
       </hardware>
     </xacro:unless>
 
-    <xacro:if value="${$(arg use_mock_hardware) and $(arg use_sim)}">
-      <hardware>
-        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-      </hardware>
-    </xacro:unless>
+    <xacro:if value="$(arg use_mock_hardware)">
+      <xacro:if value="$(arg use_sim)">
+        <hardware>
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </hardware>
+      </xacro:if>
 
-    <xacro:if value="${$(arg use_mock_hardware) and not $(arg use_sim)}">
-      <hardware>
-        <plugin>mock_components/GenericSystem</plugin>
-      </hardware>
-    </xacro:unless>
+      <xacro:unless value="$(arg use_sim)">
+        <hardware>
+          <plugin>mock_components/GenericSystem</plugin>
+        </hardware>
+      </xacro:unless>
+    </xacro:if>
 
     <joint name="$canvas_revolute">
       <command_interface name="position"/>

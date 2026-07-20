@@ -73,8 +73,8 @@ def generate_launch_description():
     'robot_description': Command(
       [
         'xacro ', urdf_model,
-        ' use_sim:= ', use_sim,
-        ' use_mock_hardware:= ', use_mock_hardware
+        ' use_sim:=', use_sim,
+        ' use_mock_hardware:=', use_mock_hardware
        ]
       ),
     }],

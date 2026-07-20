@@ -5,7 +5,7 @@
 
     <!-- Include generated urdf -->
     <xacro:include filename="$(find rai_description)/urdf/rai_geometry.urdf" />
-    <xacro:include filename="$(find igvc_description)/control/bot.ros2_control.xacro" />
+    <xacro:include filename="$(find rai_description)/urdf/rai.ros2_control.xacro" />
 
     <link name="world"/>
 
