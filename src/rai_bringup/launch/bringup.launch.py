@@ -32,12 +32,25 @@ def generate_launch_description():
             ),
             launch_arguments={
                 'use_mock_hardware': use_mock_hardware
-                }.items()
+            }.items(),
+            condition=UnlessCondition(use_sim)
+        ),
+        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [FindPackageShare('rai_description'),
+                 '/launch',
+                 '/rviz.launch.py']
+            ),
+            launch_arguments={
+                'use_mock_hardware': use_mock_hardware
+            }.items(),
+            condition=IfCondition(use_sim)
         ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-                [FindPackageShare('igvc_gazebo'),
+                [FindPackageShare('rai_gazebo'),
                  '/launch',
                  '/empty_world.launch.py'
                 ]
