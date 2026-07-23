@@ -15,7 +15,8 @@ def generate_launch_description():
   default_urdf_model_path = os.path.join(rai_description_package, 'urdf/rai.urdf.xacro')
 
   # Launch configuration variables specific to simulation
-  gui = LaunchConfiguration('gui')
+  joint_state_publisher_gui = LaunchConfiguration('joint_state_publisher_gui')
+  joint_state_publisher = LaunchConfiguration('joint_state_publisher')
   urdf_model = LaunchConfiguration('urdf_model')
   use_robot_state_pub = LaunchConfiguration('use_robot_state_pub')
   use_sim = LaunchConfiguration('use_sim')
@@ -27,10 +28,15 @@ def generate_launch_description():
     default_value=default_urdf_model_path, 
     description='Absolute path to robot urdf file')
   
-  declare_use_joint_state_publisher_cmd = DeclareLaunchArgument(
-    name='gui',
+  declare_use_joint_state_publisher_gui_cmd = DeclareLaunchArgument(
+    name='joint_state_publisher_gui',
     default_value='False',
     description='Flag to enable joint_state_publisher_gui')
+  
+  declare_use_joint_state_publisher_cmd = DeclareLaunchArgument(
+    name='joint_state_publisher',
+    default_value='False',
+    description='Flag to enable joint_state_publisher')
   
   declare_use_robot_state_pub_cmd = DeclareLaunchArgument(
     name='use_robot_state_pub',
@@ -53,14 +59,14 @@ def generate_launch_description():
   
   # Publish the joint state values for the non-fixed joints in the URDF file.
   start_joint_state_publisher_cmd = Node(
-    condition=UnlessCondition(gui),
+    condition=IfCondition(joint_state_publisher),
     package='joint_state_publisher',
     executable='joint_state_publisher',
     name='joint_state_publisher')
   
   # A GUI to manipulate the joint state values
   start_joint_state_publisher_gui_node = Node(
-    condition=IfCondition(gui),
+    condition=IfCondition(joint_state_publisher_gui),
     package='joint_state_publisher_gui',
     executable='joint_state_publisher_gui',
     name='joint_state_publisher_gui')
@@ -91,6 +97,7 @@ def generate_launch_description():
 
   # Declare the launch options
   launch_description.add_action(declare_urdf_model_path_cmd)
+  launch_description.add_action(declare_use_joint_state_publisher_gui_cmd)
   launch_description.add_action(declare_use_joint_state_publisher_cmd)
   launch_description.add_action(declare_use_robot_state_pub_cmd)  
   launch_description.add_action(declare_use_sim_cmd)

@@ -22,7 +22,8 @@ def generate_launch_description():
   publisher_launch_path = os.path.join(rai_description_package, 'launch/publisher.launch.py')
 
   # Launch configuration variables specific to simulation
-  gui = LaunchConfiguration('gui')
+  joint_state_publisher_gui = LaunchConfiguration('joint_state_publisher_gui')
+  joint_state_publisher = LaunchConfiguration('joint_state_publisher')
   urdf_model = LaunchConfiguration('urdf_model')
   rviz_config_file = LaunchConfiguration('rviz_config_file')
   use_robot_state_pub = LaunchConfiguration('use_robot_state_pub')
@@ -41,10 +42,15 @@ def generate_launch_description():
     default_value=default_rviz_config_path,
     description='Full path to the RVIZ config file to use')
     
-  declare_use_joint_state_publisher_cmd = DeclareLaunchArgument(
-    name='gui',
-    default_value='True',
+  declare_use_joint_state_publisher_gui_cmd = DeclareLaunchArgument(
+    name='joint_state_publisher_gui',
+    default_value='False',
     description='Flag to enable joint_state_publisher_gui')
+  
+  declare_use_joint_state_publisher_cmd = DeclareLaunchArgument(
+    name='joint_state_publisher',
+    default_value='False',
+    description='Flag to enable joint_state_publisher')
   
   declare_use_robot_state_pub_cmd = DeclareLaunchArgument(
     name='use_robot_state_pub',
@@ -73,7 +79,8 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(publisher_launch_path),
         launch_arguments={
           'urdf_model' : urdf_model,
-          'gui' : gui,
+          'joint_state_publisher_gui' : joint_state_publisher_gui,
+          'joint_state_publisher' : joint_state_publisher,
           'use_robot_state_pub' : use_robot_state_pub,
           'use_sim' : use_sim,
           'use_mock_hardware' : use_mock_hardware
@@ -95,6 +102,7 @@ def generate_launch_description():
   # Declare the launch options
   launch_description.add_action(declare_urdf_model_path_cmd)
   launch_description.add_action(declare_rviz_config_file_cmd)
+  launch_description.add_action(declare_use_joint_state_publisher_gui_cmd)
   launch_description.add_action(declare_use_joint_state_publisher_cmd)
   launch_description.add_action(declare_use_robot_state_pub_cmd)  
   launch_description.add_action(declare_use_rviz_cmd) 
