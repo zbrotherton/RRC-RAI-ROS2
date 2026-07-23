@@ -74,6 +74,12 @@
 			"type": "shell",
 			"command": "source install/setup.bash; ros2 launch rai_bringup bringup.launch.py use_sim:=true headless_gazebo:=true",
 			"problemMatcher": [],
+		},
+		{
+			"label": "ROS2: Open Joint Trajectory Controller GUI",
+			"type": "shell",
+			"command": "ros2 run rqt_joint_trajectory_controller rqt_joint_trajectory_controller",
+			"problemMatcher": [], 
 		}
 	]
 }

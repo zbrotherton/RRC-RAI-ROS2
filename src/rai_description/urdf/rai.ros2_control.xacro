@@ -1,43 +1,75 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="bot_ros2_control" params="name prefix use_mock_hardware">
-
-    <ros2_control name="${name}" type="system">
-      <!-- Physical hardware plugin-->
-      <xacro:unless value="${use_mock_hardware}">
+  <xacro:macro name="arm_macro" params="id">
+    <ros2_control name="arm_${id}" type="system">
+      <xacro:unless value="$(arg use_mock_hardware)">
         <hardware>
-          <plugin>odrive_ros2_control_plugin/ODriveHardwareInterface</plugin>
-          <param name="can">can0</param>
+          <plugin></plugin> #TODO Placeholder for real hardware
         </hardware>
       </xacro:unless>
 
-      <!-- Generic mock hardware motors-->
-      <!-- TODO Make it so that GazeboSimSystem is dependent on use_sim, and GenericSystem is dependent on !use_sim and use_mock_hardware-->
-      <xacro:if value="${use_mock_hardware}">
+      <xacro:if value="$(arg use_mock_hardware)">
+        <xacro:if value="$(arg use_sim)">
+          <hardware>
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+          </hardware>
+        </xacro:if>
+
+        <xacro:unless value="$(arg use_sim)">
+          <hardware>
+            <plugin>mock_components/GenericSystem</plugin>
+          </hardware>
+        </xacro:unless>
+      </xacro:if>
+
+      <joint name="arm_revolute_${id}">
+        <command_interface name="position"/>
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="arm_slider_${id}">
+        <command_interface name="position"/>
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+  </xacro:macro>
+
+  <xacro:arm_macro id ="1"/>
+  <xacro:arm_macro id ="2"/>
+  <xacro:arm_macro id ="3"/>
+  <xacro:arm_macro id ="4"/>
+
+  <ros2_control name="canvas" type="system">
+    <xacro:unless value="$(arg use_mock_hardware)">
+      <hardware>
+        <plugin></plugin> #TODO Placeholder for real hardware
+      </hardware>
+    </xacro:unless>
+
+    <xacro:if value="$(arg use_mock_hardware)">
+      <xacro:if value="$(arg use_sim)">
         <hardware>
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
         </hardware>
       </xacro:if>
 
+      <xacro:unless value="$(arg use_sim)">
+        <hardware>
+          <plugin>mock_components/GenericSystem</plugin>
+        </hardware>
+      </xacro:unless>
+    </xacro:if>
 
-      <!-- Odrive node ID setups-->
-      <joint name="${prefix}left_wheel_joint">
-        <param name="node_id">0</param>
-         <command_interface name="velocity"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-      </joint>
-      <joint name="${prefix}right_wheel_joint">
-        <param name="node_id">1</param>
-         <command_interface name="velocity"/>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-      </joint>
-
-      
-    </ros2_control>
-
-  </xacro:macro>
-
+    <joint name="canvas_revolute">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
 </robot>
