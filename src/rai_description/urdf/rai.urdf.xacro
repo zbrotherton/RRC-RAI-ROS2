@@ -15,6 +15,7 @@
     </joint>
 
     <gazebo>
+        <self_collide>true</self_collide>
         <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
             <parameters>$(find rai_control)/config/ros2_controllers.yaml</parameters>
         </plugin>
