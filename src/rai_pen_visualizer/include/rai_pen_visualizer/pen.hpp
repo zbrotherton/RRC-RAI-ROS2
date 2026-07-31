@@ -16,6 +16,7 @@
 class Pen {
     public:
         Pen();
+        Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logger);
         std::optional<visualization_msgs::msg::Marker> generate_marker(unsigned int& marker_count);
         void update_transform();
 
@@ -24,8 +25,8 @@ class Pen {
         std::unique_ptr<tf2_ros::Buffer> tf2_buffer_;
         int last_transform_stamp_;
         std::string frame_id_;
-        std::string canvas_frame_id;
-        rclcpp::Logger logger;
+        std::string canvas_frame_id_;
+        rclcpp::Logger logger_;
 };
 
 #endif  // PEN_HPP

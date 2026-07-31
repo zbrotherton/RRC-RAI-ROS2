@@ -13,6 +13,8 @@
 
 #include "pen.hpp"
 
+using namespace std::chrono_literals;
+
 class PenVisualizer : public rclcpp::Node {
     public:
         PenVisualizer();
@@ -22,7 +24,7 @@ class PenVisualizer : public rclcpp::Node {
         unsigned int marker_count_;
         void timer_callback();
         void state_callback(
-            std::function<std::optional<visualization_msgs::msg::Marker>(unsigned int)>& generator,
+            std::function<std::optional<visualization_msgs::msg::Marker>(unsigned int)>& generate_marker,
             const std_msgs::msg::Bool::SharedPtr msg
         );
         void publish_marker();

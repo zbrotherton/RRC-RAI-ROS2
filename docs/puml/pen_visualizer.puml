@@ -15,12 +15,13 @@ class PenVisualizer{
     -pen_array_ : std::Array<Pen>
     -marker_count_ : unsigned int
     -timer_callback()
-    -state_callback(std::function<std::optional<visualization_msgs/msg/Marker>(unsigned int)>& generator, std_msgs/msg/Bool msg)
+    -state_callback(std::function<std::optional<visualization_msgs/msg/Marker>(unsigned int)>& generate_marker, std_msgs/msg/Bool msg)
     -publish_marker(visualization_msgs/msg/Marker marker)
     .. Parameters ..
     +canvas_frame_id
     +pen_frame_prefix
     +pen_state_topic_prefix
+    +listener_frequency
     .. Topics ..
     -<<Timer>> timer_
     -<<Subscriber>> state_sub_array_ : std::Array<std_msgs/msg/Bool>
