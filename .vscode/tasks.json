@@ -6,6 +6,9 @@
 			"args": [
 				"build",
 				"--symlink-install",
+				"--cmake-args",
+				"-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+				"--no-warn-unused-cli"
 			],
 			"problemMatcher": [
 				"$colcon-gcc"
