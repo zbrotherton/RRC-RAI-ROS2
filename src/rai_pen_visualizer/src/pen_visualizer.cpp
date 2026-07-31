@@ -7,12 +7,12 @@
 #include "visualization_msgs/msg/marker.hpp"
 #include "std_msgs/msg/bool.hpp"
 
-class PenSimulation : public rclcpp::Node {
+class PenVisualizer : public rclcpp::Node {
   public:
-    PenSimulation() : Node("pen_simulation") {
+    PenVisualizer() : Node("pen_visualizer") {
       marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("pen_marker", 1);
       state_sub_ = this->create_subscription<std_msgs::msg::Bool>("pen_state", 1, 
-        std::bind(&PenSimulation::state_callback, this, std::placeholders::_1));
+        std::bind(&PenVisualizer::state_callback, this, std::placeholders::_1));
     }
 
   private:
@@ -66,7 +66,7 @@ class PenSimulation : public rclcpp::Node {
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<PenSimulation>());
+  rclcpp::spin(std::make_shared<PenVisualizer>());
   rclcpp::shutdown();
   return 0;
 }
