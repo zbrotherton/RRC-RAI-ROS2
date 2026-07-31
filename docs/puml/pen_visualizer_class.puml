@@ -6,16 +6,16 @@ class Pen{
     -last_transform_stamp_ : int
     -frame_id : std::string
     -canvas_frame_id : std::string
-    -marker_count_ : unsigned int
-
-    -publish_marker(unsigned int& marker_count_)
-    +state_callback(std_msgs/msg/Bool msg)
+    +generate_marker(unsigned int marker_count_) : visualization_msgs/msg/Marker
     +update_transform()
 }
 
 class PenVisualizer{
     -pen_array_ : std::Array<Pen>
+    -marker_count_ : unsigned int
     -timer_callback()
+    -state_callback(std::function<void(unsigned int)>& generated, std_msgs/msg/Bool msg)
+    -publish_marker(visualization_msgs/msg/Marker marker)
     .. Parameters ..
     +canvas_frame_id
     +pen_frame_prefix
