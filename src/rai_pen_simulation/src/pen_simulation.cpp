@@ -7,8 +7,6 @@
 #include "visualization_msgs/msg/marker.hpp"
 #include "std_msgs/msg/bool.hpp"
 
-using namespace std::chrono_literals;
-
 class PenSimulation : public rclcpp::Node {
   public:
     PenSimulation() : Node("pen_simulation") {
