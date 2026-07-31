@@ -18,7 +18,8 @@
                 "donjayamanne.python-extension-pack",
                 "eamodio.gitlens",
                 "Ranch-Hand-Robotics.rde-pack",
-                "ms-vsliveshare.vsliveshare"
+                "ms-vsliveshare.vsliveshare",
+                "jebbs.plantuml"
             ]
         }
     },
