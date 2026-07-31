@@ -1,13 +1,13 @@
 @startuml PenVisualizerClass
 
 class Pen{
-    -tf2_listener_ : tf2_ros::Listener
-    -tf2_buffer_ : tf2_ros::Buffer
+    -tf2_listener_ : std::shared_ptr<tf2_ros::TransformListener>
+    -tf2_buffer_ : std::unique_ptr<tf2_ros::Buffer>
     -last_transform_stamp_ : int
     -frame_id_ : std::string
     -canvas_frame_id_ : std::string
     -logger_ : rclcpp::Logger
-    +generate_marker(unsigned int& marker_count_) : std::optional<visualization_msgs/msg/Marker>
+    +generate_marker(unsigned int& marker_count) : std::optional<visualization_msgs/msg/Marker>
     +update_transform()
 }
 
@@ -20,7 +20,7 @@ class PenVisualizer{
     .. Parameters ..
     +canvas_frame_id
     +pen_frame_prefix
-    +pen_state_topic_prefixS
+    +pen_state_topic_prefix
     .. Topics ..
     -<<Timer>> timer_
     -<<Subscriber>> state_sub_array_ : std::Array<std_msgs/msg/Bool>

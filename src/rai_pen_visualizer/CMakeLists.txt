@@ -8,11 +8,18 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
 find_package(visualization_msgs REQUIRED)
 
 include_directories(include)
-add_executable(pen_visualizer_node src/pen_visualizer.cpp src/pen_visualizer_node.cpp)
-ament_target_dependencies(pen_visualizer_node rclcpp visualization_msgs)
+add_executable(
+  pen_visualizer_node 
+  src/pen.cpp
+  src/pen_visualizer.cpp 
+  src/pen_visualizer_node.cpp
+)
+ament_target_dependencies(pen_visualizer_node rclcpp tf2 tf2_ros visualization_msgs)
 
 install(
   TARGETS pen_visualizer_node
