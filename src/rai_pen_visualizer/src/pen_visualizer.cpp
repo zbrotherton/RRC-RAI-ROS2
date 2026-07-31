@@ -48,8 +48,7 @@ void PenVisualizer::state_callback(const std_msgs::msg::Bool::SharedPtr msg) {
   }
 }
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
   rclcpp::init(argc, argv);
   rclcpp::spin(std::make_shared<PenVisualizer>());
   rclcpp::shutdown();
