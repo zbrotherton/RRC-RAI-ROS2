@@ -11,11 +11,11 @@ find_package(rclcpp REQUIRED)
 find_package(visualization_msgs REQUIRED)
 
 include_directories(include)
-add_executable(pen_visualizer src/pen_visualizer.cpp)
-ament_target_dependencies(pen_visualizer rclcpp visualization_msgs)
+add_executable(pen_visualizer_node src/pen_visualizer.cpp src/pen_visualizer_node.cpp)
+ament_target_dependencies(pen_visualizer_node rclcpp visualization_msgs)
 
 install(
-  TARGETS pen_visualizer
+  TARGETS pen_visualizer_node
   DESTINATION lib/${PROJECT_NAME}
 )
 

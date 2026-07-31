@@ -16,7 +16,7 @@ def generate_launch_description():
 
     pen_visualizer_node = Node(
         package="rai_pen_visualizer",
-        executable="pen_visualizer",
+        executable="pen_visualizer_node",
         parameters=[
             visualizer_params
         ],
