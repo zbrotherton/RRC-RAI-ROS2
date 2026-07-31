@@ -1,0 +1,31 @@
+@startuml PenVisualizerClassDiagram
+
+class Pen{
+    -tf2_listener_ : tf2_ros::Listener
+    -tf2_buffer_ : tf2_ros::Buffer
+    -last_transform_stamp_ : int
+    -frame_id : std::string
+    -canvas_frame_id : std::string
+    -marker_count_ : unsigned int
+
+    -publish_marker(unsigned int& marker_count_)
+    +state_callback(std_msgs/msg/Bool msg)
+    +update_transform()
+}
+
+class PenVisualizer{
+    -pen_array_ : std::Array<Pen>
+    -timer_callback()
+    .. Parameters ..
+    +canvas_frame_id
+    +pen_frame_prefix
+    +pen_state_topic_prefix
+    .. Topics ..
+    -<<Timer>> timer_
+    -<<Subscriber>> state_sub_array_ : std::Array<std_msgs/msg/Bool>
+    -<<Publisher>> marker_pub_ : visualization_msgs/msg/Marker
+}
+
+Pen --* "4..4" PenVisualizer
+
+@enduml

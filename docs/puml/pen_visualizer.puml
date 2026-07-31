@@ -1,3 +1,0 @@
-@startuml PenVisualizer
-Alice -> Bob: test
-@enduml
