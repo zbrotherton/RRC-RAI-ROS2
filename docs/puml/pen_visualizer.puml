@@ -1,0 +1,60 @@
+@startuml PenVisualizerClass
+
+class Pen{
+    -tf2_listener_ : tf2_ros::Listener
+    -tf2_buffer_ : tf2_ros::Buffer
+    -last_transform_stamp_ : int
+    -frame_id_ : std::string
+    -canvas_frame_id_ : std::string
+    -logger_ : rclcpp::Logger
+    +generate_marker(unsigned int& marker_count_) : std::optional<visualization_msgs/msg/Marker>
+    +update_transform()
+}
+
+class PenVisualizer{
+    -pen_array_ : std::Array<Pen>
+    -marker_count_ : unsigned int
+    -timer_callback()
+    -state_callback(std::function<std::optional<visualization_msgs/msg/Marker>(unsigned int)>& generator, std_msgs/msg/Bool msg)
+    -publish_marker(visualization_msgs/msg/Marker marker)
+    .. Parameters ..
+    +canvas_frame_id
+    +pen_frame_prefix
+    +pen_state_topic_prefixS
+    .. Topics ..
+    -<<Timer>> timer_
+    -<<Subscriber>> state_sub_array_ : std::Array<std_msgs/msg/Bool>
+    -<<Publisher>> marker_pub_ : visualization_msgs/msg/Marker
+}
+
+Pen --* "4..4" PenVisualizer
+@enduml
+
+@startuml PenVisualizerActivity
+start
+:state_callback triggered;
+if (Pen State?) then (down)
+    partition "generate_marker" {
+        if (try Lookup transform from pen frame to canvas frame) then (success)
+            if (transform stamp == last transform stamp?) then (true)
+                :log INFO "Duplicate Transform";
+                :return nullopt;
+            else(false)
+                :Generate marker;
+                :Increment marker count;
+                :return marker;
+            endif
+        else (catch)
+            :log WARN "Bad Transform Lookup";
+            :return nullopt;
+        endif
+    }
+    if (Optional has value) then (true)
+        :log INFO "Publishing Marker <number>";
+        :Publish Marker;
+    else (false)
+    endif
+else (up)
+endif
+stop
+@enduml
