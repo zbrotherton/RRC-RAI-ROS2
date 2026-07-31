@@ -20,6 +20,7 @@ class PenVisualizer : public rclcpp::Node {
         
     rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
     rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr state_sub_;
+    unsigned int marker_count_;
 };
 
 #endif  // PEN_VISUALIZER_HPP

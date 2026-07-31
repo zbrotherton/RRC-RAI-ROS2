@@ -1,6 +1,6 @@
 #include "rai_pen_visualizer/pen_visualizer.hpp"
 
-PenVisualizer::PenVisualizer() : Node("pen_visualizer") {
+PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
   marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("pen_marker", 1);
   state_sub_ = this->create_subscription<std_msgs::msg::Bool>("pen_state", 1, 
     std::bind(&PenVisualizer::state_callback, this, std::placeholders::_1));
@@ -12,8 +12,8 @@ void PenVisualizer::publish_marker() {
   marker.header.frame_id = "/my_frame";
   marker.header.stamp = rclcpp::Clock().now();
 
-  marker.ns = "basic_shapes";
-  marker.id = 0;
+  marker.ns = "pen_visualizer";
+  marker.id = marker_count_++;
 
   marker.type = visualization_msgs::msg::Marker::POINTS;
 
