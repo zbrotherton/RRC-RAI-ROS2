@@ -22,14 +22,9 @@ class PenVisualizer : public rclcpp::Node {
     private:
         std::array<Pen, 4> pen_array_;
         unsigned int marker_count_;
-        void timer_callback();
-        void state_callback(
-            std::function<std::optional<visualization_msgs::msg::Marker>(unsigned int)>& generate_marker,
-            const std_msgs::msg::Bool::SharedPtr msg
-        );
-        void publish_marker();
+        void state_callback(int id, const std_msgs::msg::Bool::SharedPtr msg);
+        void publish_marker(visualization_msgs::msg::Marker marker) {marker_pub_->publish(marker);}
         
-        rclcpp::TimerBase::SharedPtr timer_;
         rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
         std::array<rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr, 4> state_sub_array_;
 };

@@ -12,18 +12,18 @@
 #include "tf2_ros/buffer.h"
 #include "visualization_msgs/msg/marker.hpp"
 #include "std_msgs/msg/bool.hpp"
+#include "geometry_msgs/msg/transform_stamped.hpp"
 
 class Pen {
     public:
-        Pen();
-        Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logger);
-        std::optional<visualization_msgs::msg::Marker> generate_marker(unsigned int& marker_count);
-        void update_transform();
+        Pen() : logger_(rclcpp::get_logger("")) {}
+        Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logger, rclcpp::Clock::SharedPtr clock);
+        std::optional<visualization_msgs::msg::Marker> generate_marker(unsigned int marker_count);
 
     private:
         std::shared_ptr<tf2_ros::TransformListener> tf2_listener_;
         std::unique_ptr<tf2_ros::Buffer> tf2_buffer_;
-        int last_transform_stamp_;
+        rclcpp::Time last_transform_stamp_;
         std::string frame_id_;
         std::string canvas_frame_id_;
         rclcpp::Logger logger_;

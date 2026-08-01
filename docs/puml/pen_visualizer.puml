@@ -3,27 +3,23 @@
 class Pen{
     -tf2_listener_ : std::shared_ptr<tf2_ros::TransformListener>
     -tf2_buffer_ : std::unique_ptr<tf2_ros::Buffer>
-    -last_transform_stamp_ : int
+    -last_transform_stamp_ : rclcpp::Time 
     -frame_id_ : std::string
     -canvas_frame_id_ : std::string
     -logger_ : rclcpp::Logger
-    +generate_marker(unsigned int& marker_count) : std::optional<visualization_msgs/msg/Marker>
-    +update_transform()
+    +generate_marker(unsigned int marker_count) : std::optional<visualization_msgs/msg/Marker>
 }
 
 class PenVisualizer{
     -pen_array_ : std::Array<Pen>
     -marker_count_ : unsigned int
-    -timer_callback()
-    -state_callback(std::function<std::optional<visualization_msgs/msg/Marker>(unsigned int)>& generate_marker, std_msgs/msg/Bool msg)
+    -state_callback(int id, std_msgs/msg/Bool msg)
     -publish_marker(visualization_msgs/msg/Marker marker)
     .. Parameters ..
     +canvas_frame_id
     +pen_frame_prefix
     +pen_state_topic_prefix
-    +listener_frequency
     .. Topics ..
-    -<<Timer>> timer_
     -<<Subscriber>> state_sub_array_ : std::Array<std_msgs/msg/Bool>
     -<<Publisher>> marker_pub_ : visualization_msgs/msg/Marker
 }
@@ -42,7 +38,7 @@ if (Pen State?) then (down)
                 :return nullopt;
             else(false)
                 :Generate marker;
-                :Increment marker count;
+                :Update last transform stamp;
                 :return marker;
             endif
         else (catch)
@@ -52,6 +48,7 @@ if (Pen State?) then (down)
     }
     if (Optional has value) then (true)
         :log INFO "Publishing Marker <number>";
+        :Increment marker count;
         :Publish Marker;
     else (false)
     endif
