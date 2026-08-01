@@ -1,7 +1,7 @@
 #include "rai_pen_visualizer/pen.hpp"
 
 Pen::Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logger, rclcpp::Clock::SharedPtr clock) : 
-    frame_id_(frame_id), canvas_frame_id_(canvas_frame_id), logger_(logger) {
+    frame_id_(frame_id), canvas_frame_id_(canvas_frame_id), logger_(logger), clock_(clock){
         tf2_buffer_ = std::make_unique<tf2_ros::Buffer>(clock);
         tf2_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf2_buffer_);
         last_transform_stamp_ = rclcpp::Time();
@@ -30,7 +30,7 @@ std::optional<visualization_msgs::msg::Marker> Pen::generate_marker(unsigned int
     visualization_msgs::msg::Marker marker;
 
     marker.header.frame_id = canvas_frame_id_;
-    marker.header.stamp = rclcpp::Clock().now();
+    marker.header.stamp = clock_->now();
 
     marker.ns = "pen_visualizer";
     marker.id = marker_count;

@@ -27,6 +27,7 @@ class Pen {
         std::string frame_id_;
         std::string canvas_frame_id_;
         rclcpp::Logger logger_;
+        rclcpp::Clock::SharedPtr clock_;
 };
 
 #endif  // PEN_HPP

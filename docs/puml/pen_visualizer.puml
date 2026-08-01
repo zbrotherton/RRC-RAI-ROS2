@@ -7,6 +7,7 @@ class Pen{
     -frame_id_ : std::string
     -canvas_frame_id_ : std::string
     -logger_ : rclcpp::Logger
+    -clock_ : rclcpp::Clock::SharedPtr
     +generate_marker(unsigned int marker_count) : std::optional<visualization_msgs/msg/Marker>
 }
 

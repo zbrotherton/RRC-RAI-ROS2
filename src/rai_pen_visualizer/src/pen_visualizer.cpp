@@ -4,7 +4,7 @@ PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
   this->declare_parameter("canvas_frame_id", "canvas");
   this->declare_parameter("pen_frame_prefix", "pen");
   this->declare_parameter("pen_state_topic_prefix", "pen_state"); 
-  
+
   for(int i = 0; i < 4; i++){
     std::string id = std::to_string(i + 1);
     
