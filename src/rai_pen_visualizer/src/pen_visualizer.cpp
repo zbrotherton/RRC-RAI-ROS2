@@ -18,7 +18,8 @@ PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
     state_sub_array_.at(i) = this->create_subscription<std_msgs::msg::Bool>(
       this->get_parameter("pen_state_topic_prefix").as_string() + "_" + id,
       1,
-      std::bind(&PenVisualizer::state_callback, this, i, std::placeholders::_1));
+      [this, i](const std_msgs::msg::Bool& msg) {this->state_callback(i, msg);}
+    );
   }
 
   marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("pen_marker", 1);
