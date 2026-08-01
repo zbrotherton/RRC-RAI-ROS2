@@ -13,7 +13,7 @@ class Pen{
 class PenVisualizer{
     -pen_array_ : std::Array<Pen>
     -marker_count_ : unsigned int
-    -state_callback(int id, std_msgs/msg/Bool msg)
+    -state_callback(int pen, std_msgs/msg/Bool msg)
     -publish_marker(visualization_msgs/msg/Marker marker)
     .. Parameters ..
     +canvas_frame_id

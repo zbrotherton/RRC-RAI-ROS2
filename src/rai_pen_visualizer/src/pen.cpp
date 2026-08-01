@@ -4,7 +4,7 @@ Pen::Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logge
     frame_id_(frame_id), canvas_frame_id_(canvas_frame_id), logger_(logger) {
         tf2_buffer_ = std::make_unique<tf2_ros::Buffer>(clock);
         tf2_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf2_buffer_);
-    last_transform_stamp_ = rclcpp::Time();
+        last_transform_stamp_ = rclcpp::Time();
 }
 
 std::optional<visualization_msgs::msg::Marker> Pen::generate_marker(unsigned int marker_count) {
