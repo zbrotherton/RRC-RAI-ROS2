@@ -1,3 +1,5 @@
 pen_visualizer:
   ros__parameters:
-    placeholder: placeholder
+    canvas_frame_id: canvas
+    pen_frame_prefix: pen
+    pen_state_topic_prefix: pen_state
