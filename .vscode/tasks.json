@@ -8,7 +8,9 @@
 				"--symlink-install",
 				"--cmake-args",
 				"-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
-				"--no-warn-unused-cli"
+				"--no-warn-unused-cli",
+				"-DCMAKE_CXX_STANDARD=17", 
+				"-DCMAKE_CXX_STANDARD_REQUIRED=ON"
 			],
 			"problemMatcher": [
 				"$colcon-gcc"
