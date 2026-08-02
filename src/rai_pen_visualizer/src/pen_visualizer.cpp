@@ -9,8 +9,8 @@ PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
     std::string id = std::to_string(i + 1);
     
     pen_array_.at(i) = Pen(
-      this->get_parameter("canvas_frame_id").as_string(),
       this->get_parameter("pen_frame_prefix").as_string() + "_" + id,
+      this->get_parameter("canvas_frame_id").as_string(),
       this->get_logger(),
       this->get_clock()
     );
