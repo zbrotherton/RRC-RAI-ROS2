@@ -1,0 +1,87 @@
+@startuml PenVisualizerClass
+
+class Pen{
+    -state_ : bool
+    -marker_active_ : bool
+    -marker_id_ : int
+    -current_marker_ : visualization_msgs/msg/Marker
+    -frame_id_ : std::string
+
+    +set_state(bool state)
+    +get_state() : bool
+    +initialize_marker(const std::string& canvas_frame)
+    +update_stamp(rclcpp::Time time)
+    +add_point(geometry_msgs::msg::Point point)
+    +get_marker() : visualization_msgs::msg::Marker& 
+    +get_frame_id() : std::string
+    +get_marker_active() : bool
+    +finish_marker(const rclcpp::Logger& logger, bool out_of_bounds)
+    +update_log(const rclcpp::Logger& logger)
+}
+
+class PenVisualizer{
+    -pen_array_ : std::Array<Pen>
+    -canvas_bound_ : double
+    -canvas_frame_id_ : std::string
+    -tf2_listener_ : std::shared_ptr<tf2_ros::TransformListener> 
+    -tf2_buffer_ : std::unique_ptr<tf2_ros::Buffer>
+
+    -timer_callback()
+    -state_callback(int pen, std_msgs/msg/Bool msg)
+    -publish_marker(visualization_msgs/msg/Marker marker)
+    .. Parameters ..
+    +canvas_frame_id
+    +canvas_size_in
+    +pen_frame_prefix
+    +pen_state_topic_prefix
+    +update_frequency
+    .. Topics ..
+    -<<Timer>> timer_
+    -<<Subscriber>> state_sub_array_ : std::Array<std_msgs/msg/Bool>
+    -<<Publisher>> marker_pub_ : visualization_msgs/msg/Marker
+}
+
+Pen --* "4..4" PenVisualizer
+@enduml
+
+@startuml PenVisualizerActivity
+start
+:timer_callback triggered;
+:Repeat for all pens:;
+if (Pen State?) then (down)
+    if (try Lookup transform from pen frame to canvas frame) then (success)
+        :Update last transform stamp;
+        if(Out of canvas bound?) then (true)
+            if(Current marker active?) then (true)
+                :Set active marker to false;
+                :log INFO "Out of bounds, Finished marker <id> for <frame_id>";
+                :Increment marker id;
+                :publish current marker;
+            else (false)
+            endif
+        else (false)
+            if(Current marker active?) then (true)
+            else (false)
+                :Create new marker without points;
+                :Set active marker to true;
+            endif
+            :Update marker timestamp;
+            :Generate point;
+            :Add point to current marker;
+            :log DEBUG "Updating marker <id> for <frame_id>";
+            :publish current marker;
+        endif
+    else (catch)
+        :log WARN "Bad Transform Lookup";
+    endif
+else (up)
+    if(Current marker active?) then (true)
+        :Set active marker to false;
+        :log INFO "Finished marker <id> for <frame_id>";
+        :Increment marker id;
+        :publish current marker;
+    else (false)
+    endif
+endif
+stop
+@enduml
