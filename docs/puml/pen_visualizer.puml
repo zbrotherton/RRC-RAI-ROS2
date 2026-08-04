@@ -67,7 +67,7 @@ partition "generate_marker" {
                     :Update marker timestamp;
                     :Generate point;
                     :Add point to current marker;
-                    :log INFO "Updating marker <id> for <frame_id>";
+                    :log DEBUG "Updating marker <id> for <frame_id>";
                     :return current marker;
                 endif
             endif

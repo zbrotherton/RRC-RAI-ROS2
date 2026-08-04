@@ -104,7 +104,7 @@ std::optional<visualization_msgs::msg::Marker> Pen::generate_marker() {
 
     current_marker_.points.push_back(point);
 
-    RCLCPP_INFO(logger_, "Updating marker %i for %s", 
+    RCLCPP_DEBUG(logger_, "Updating marker %i for %s", 
         marker_id_, 
         frame_id_.c_str()
     );
