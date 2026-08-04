@@ -47,54 +47,41 @@ Pen --* "4..4" PenVisualizer
 @startuml PenVisualizerActivity
 start
 :timer_callback triggered;
-partition "generate_marker" {
-    if (Pen State?) then (down)
-        if (try Lookup transform from pen frame to canvas frame) then (success)
-            if (transform stamp == last transform stamp?) then (true)
-                :log INFO "Duplicate Transform";
-                :return nullopt;
-            else(false)
-                :Update last transform stamp;
-                if(Out of canvas bound?) then (true)
-                    if(Current marker active?) then (true)
-                        :Set active marker to false;
-                        :log INFO "Out of bounds, Finished marker <id> for <frame_id>";
-                        :Increment marker id;
-                        :return current marker;
-                    else (false)
-                        :return nullopt;
-                    endif
-                else (false)
-                    if(Current marker active?) then (true)
-                    else (false)
-                        :Create new marker without points;
-                        :Set active marker to true;
-                    endif
-                    :Update marker timestamp;
-                    :Generate point;
-                    :Add point to current marker;
-                    :log DEBUG "Updating marker <id> for <frame_id>";
-                    :return current marker;
-                endif
-            endif
-        else (catch)
-            :log WARN "Bad Transform Lookup";
-            :return nullopt;
-        endif
-        else (up)
+:Repeat for all pens:;
+if (Pen State?) then (down)
+    if (try Lookup transform from pen frame to canvas frame) then (success)
+        :Update last transform stamp;
+        if(Out of canvas bound?) then (true)
             if(Current marker active?) then (true)
                 :Set active marker to false;
-                :log INFO "Finished marker <id> for <frame_id>";
+                :log INFO "Out of bounds, Finished marker <id> for <frame_id>";
                 :Increment marker id;
-                :return current marker;
+                :publish current marker;
             else (false)
-                :return nullopt;
             endif
+        else (false)
+            if(Current marker active?) then (true)
+            else (false)
+                :Create new marker without points;
+                :Set active marker to true;
+            endif
+            :Update marker timestamp;
+            :Generate point;
+            :Add point to current marker;
+            :log DEBUG "Updating marker <id> for <frame_id>";
+            :publish current marker;
         endif
-    }
-    if (Optional has value) then (true)
-        :Publish Marker;
+    else (catch)
+        :log WARN "Bad Transform Lookup";
+    endif
+else (up)
+    if(Current marker active?) then (true)
+        :Set active marker to false;
+        :log INFO "Finished marker <id> for <frame_id>";
+        :Increment marker id;
+        :publish current marker;
     else (false)
     endif
+endif
 stop
 @enduml
