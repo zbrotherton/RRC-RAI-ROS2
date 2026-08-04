@@ -61,5 +61,7 @@ std::optional<visualization_msgs::msg::Marker> Pen::generate_marker(unsigned int
 
     marker.lifetime = rclcpp::Duration::from_nanoseconds(0);
 
+    marker.frame_locked = true;
+
     return std::make_optional(marker);
 }
