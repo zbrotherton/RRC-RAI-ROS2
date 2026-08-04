@@ -35,35 +35,35 @@ PenVisualizer::PenVisualizer() : Node("pen_visualizer") {
 void PenVisualizer::timer_callback(){
   for(Pen& pen : pen_array_){
     if(!pen.get_state()){
-        if(!pen.get_marker_active()){
-            continue;
-        }
-        pen.finish_marker(this->get_logger(), false);
-        publish_marker(pen.get_marker());
+      if(!pen.get_marker_active()){
         continue;
+      }
+      pen.finish_marker(this->get_logger(), false);
+      publish_marker(pen.get_marker());
+      continue;
     }
 
     geometry_msgs::msg::TransformStamped t;
     try {
-        t = tf2_buffer_->lookupTransform(canvas_frame_id_, pen.get_frame_id(), tf2::TimePointZero);
+      t = tf2_buffer_->lookupTransform(canvas_frame_id_, pen.get_frame_id(), tf2::TimePointZero);
     }
     catch(const tf2::TransformException & ex) {
-        RCLCPP_WARN(this->get_logger(), "Could not transform %s to %s: %s", 
-            canvas_frame_id_.c_str(), 
-            pen.get_frame_id().c_str(),
-            ex.what()
-        );
-        continue;
+      RCLCPP_WARN(this->get_logger(), "Could not transform %s to %s: %s", 
+        canvas_frame_id_.c_str(), 
+        pen.get_frame_id().c_str(),
+        ex.what()
+      );
+      continue;
     }
 
     if(std::abs(t.transform.translation.x) > canvas_bound_ || 
-        std::abs(t.transform.translation.y) > canvas_bound_){
-        if(!pen.get_marker_active()){
-            continue;
-        }
-        pen.finish_marker(this->get_logger(), true);
-        publish_marker(pen.get_marker());
+      std::abs(t.transform.translation.y) > canvas_bound_){
+      if(!pen.get_marker_active()){
         continue;
+      }
+      pen.finish_marker(this->get_logger(), true);
+      publish_marker(pen.get_marker());
+      continue;
     }
 
     if(!pen.get_marker_active()){
