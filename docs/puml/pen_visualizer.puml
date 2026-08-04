@@ -1,25 +1,31 @@
 @startuml PenVisualizerClass
 
 class Pen{
-    -tf2_listener_ : std::shared_ptr<tf2_ros::TransformListener>
-    -tf2_buffer_ : std::unique_ptr<tf2_ros::Buffer>
-    -last_transform_stamp_ : rclcpp::Time 
     -state_ : bool
-    -active_marker_ : bool
+    -marker_active_ : bool
     -marker_id_ : int
-    -canvas_bound_ : double
     -current_marker_ : visualization_msgs/msg/Marker
     -frame_id_ : std::string
-    -canvas_frame_id_ : std::string
-    -logger_ : rclcpp::Logger
-    -clock_ : rclcpp::Clock::SharedPtr
-    +generate_marker(unsigned int marker_count) : std::optional<visualization_msgs/msg/Marker>
+
     +set_state(bool state)
+    +get_state() : bool
+    +initialize_marker(const std::string& canvas_frame)
+    +update_stamp(rclcpp::Time time)
+    +add_point(geometry_msgs::msg::Point point)
+    +get_marker() : visualization_msgs::msg::Marker& 
+    +get_frame_id() : std::string
+    +get_marker_active() : bool
+    +finish_marker(const rclcpp::Logger& logger, bool out_of_bounds)
+    +update_log(const rclcpp::Logger& logger)
 }
 
 class PenVisualizer{
     -pen_array_ : std::Array<Pen>
-    -marker_count_ : unsigned int
+    -canvas_bound_ : double
+    -canvas_frame_id_ : std::string
+    -tf2_listener_ : std::shared_ptr<tf2_ros::TransformListener> 
+    -tf2_buffer_ : std::unique_ptr<tf2_ros::Buffer>
+
     -timer_callback()
     -state_callback(int pen, std_msgs/msg/Bool msg)
     -publish_marker(visualization_msgs/msg/Marker marker)
