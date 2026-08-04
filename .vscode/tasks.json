@@ -91,7 +91,7 @@
 		{
 			"label": "ROS2: Open Joint Trajectory Controller GUI",
 			"type": "shell",
-			"command": "ros2 run rqt_joint_trajectory_controller rqt_joint_trajectory_controller",
+			"command": "source /opt/ros/humble/setup.bash; ros2 run rqt_joint_trajectory_controller rqt_joint_trajectory_controller",
 			"problemMatcher": [], 
 		}
 	]
