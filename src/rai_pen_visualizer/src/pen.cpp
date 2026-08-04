@@ -15,12 +15,12 @@ std::optional<visualization_msgs::msg::Marker> Pen::generate_marker() {
         if(!active_marker_){
             return std::nullopt;
         }
-        marker_id_++;
         active_marker_ = false;
         RCLCPP_INFO(logger_, "Finished marker %i for %s", 
             marker_id_, 
             frame_id_.c_str()
         );
+        marker_id_++;
         return std::make_optional(current_marker_);
     }
 

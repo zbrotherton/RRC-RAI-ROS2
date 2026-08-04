@@ -61,9 +61,9 @@ partition "generate_marker" {
         endif
         else (up)
             if(Current marker active?) then (true)
-                :Increment marker id;
                 :Set active marker to false;
                 :log INFO "Finished marker <id> for <frame_id>";
+                :Increment marker id;
                 :return current marker;
             else (false)
                 :return nullopt;
