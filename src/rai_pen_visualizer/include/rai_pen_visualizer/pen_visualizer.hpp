@@ -21,10 +21,17 @@ class PenVisualizer : public rclcpp::Node {
 
     private:
         std::array<Pen, 4> pen_array_;
+
         unsigned int marker_count_;
+        double canvas_bound_;
+        std::string canvas_frame_id_;
+        std::shared_ptr<tf2_ros::TransformListener> tf2_listener_;
+        std::unique_ptr<tf2_ros::Buffer> tf2_buffer_;
+        rclcpp::Time last_transform_stamp_;
+
         void timer_callback();
         void state_callback(int pen, const std_msgs::msg::Bool& msg);
-        void publish_marker(visualization_msgs::msg::Marker marker) {marker_pub_->publish(marker);}
+        void publish_marker(visualization_msgs::msg::Marker& marker) {marker_pub_->publish(marker);}
         
         rclcpp::TimerBase::SharedPtr timer_;
         rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;

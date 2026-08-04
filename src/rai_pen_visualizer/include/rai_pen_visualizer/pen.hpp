@@ -17,24 +17,25 @@
 
 class Pen {
     public:
-        Pen() : logger_(rclcpp::get_logger("")) {}
-        Pen(std::string frame_id, std::string canvas_frame_id, double canvas_bound, rclcpp::Logger logger, rclcpp::Clock::SharedPtr clock);
-        std::optional<visualization_msgs::msg::Marker> generate_marker();
+        Pen(){Pen("");}
+        Pen(std::string frame_id);
         void set_state(bool state){state_ = state;}
+        bool get_state(){return state_;}
+        void initialize_marker(const std::string& canvas_frame);
+        void update_stamp(rclcpp::Time time){current_marker_.header.stamp = time;}
+        void add_point(geometry_msgs::msg::Point point){current_marker_.points.push_back(point);}
+        visualization_msgs::msg::Marker& get_marker(){return current_marker_;}
+        std::string get_frame_id(){return frame_id_;}
+        bool get_marker_active(){return marker_active_;}
+        void finish_marker(const rclcpp::Logger& logger, bool out_of_bounds);
+        void update_log(const rclcpp::Logger& logger);
 
     private:
-        std::shared_ptr<tf2_ros::TransformListener> tf2_listener_;
-        std::unique_ptr<tf2_ros::Buffer> tf2_buffer_;
-        rclcpp::Time last_transform_stamp_;
         bool state_;
-        bool active_marker_;
+        bool marker_active_;
         int marker_id_;
-        double canvas_bound_;
         visualization_msgs::msg::Marker current_marker_;
         std::string frame_id_;
-        std::string canvas_frame_id_;
-        rclcpp::Logger logger_;
-        rclcpp::Clock::SharedPtr clock_;
 };
 
 #endif  // PEN_HPP
