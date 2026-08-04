@@ -18,7 +18,7 @@
 class Pen {
     public:
         Pen() : logger_(rclcpp::get_logger("")) {}
-        Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logger, rclcpp::Clock::SharedPtr clock);
+        Pen(std::string frame_id, std::string canvas_frame_id, double canvas_bound, rclcpp::Logger logger, rclcpp::Clock::SharedPtr clock);
         std::optional<visualization_msgs::msg::Marker> generate_marker();
         void set_state(bool state){state_ = state;}
 
@@ -29,6 +29,7 @@ class Pen {
         bool state_;
         bool active_marker_;
         int marker_id_;
+        double canvas_bound_;
         visualization_msgs::msg::Marker current_marker_;
         std::string frame_id_;
         std::string canvas_frame_id_;

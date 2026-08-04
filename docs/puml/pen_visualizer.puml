@@ -44,16 +44,27 @@ partition "generate_marker" {
                 :return nullopt;
             else(false)
                 :Update last transform stamp;
-                if(Current marker active?) then (true)
+                if(Out of canvas bound?) then (true)
+                    if(Current marker active?) then (true)
+                        :Set active marker to false;
+                        :log INFO "Out of bounds, Finished marker <id> for <frame_id>";
+                        :Increment marker id;
+                        :return current marker;
+                    else (false)
+                        :return nullopt;
+                    endif
                 else (false)
-                    :Create new marker without points;
-                    :Set active marker to true;
+                    if(Current marker active?) then (true)
+                    else (false)
+                        :Create new marker without points;
+                        :Set active marker to true;
+                    endif
+                    :Update marker timestamp;
+                    :Generate point;
+                    :Add point to current marker;
+                    :log INFO "Updating marker <id> for <frame_id>";
+                    :return current marker;
                 endif
-                :Update marker timestamp;
-                :Generate point;
-                :Add point to current marker;
-                :log INFO "Updating marker <id> for <frame_id>";
-                :return current marker;
             endif
         else (catch)
             :log WARN "Bad Transform Lookup";

@@ -3,6 +3,7 @@
 PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
   this->declare_parameter("canvas_frame_id", "canvas");
   this->declare_parameter("pen_frame_prefix", "pen");
+  this->declare_parameter("canvas_size_in", 20.0);
   this->declare_parameter("pen_state_topic_prefix", "pen_state");
   this->declare_parameter("update_frequency", 20);
 
@@ -12,6 +13,7 @@ PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
     pen_array_.at(i) = Pen(
       this->get_parameter("pen_frame_prefix").as_string() + "_" + id,
       this->get_parameter("canvas_frame_id").as_string(),
+      this->get_parameter("canvas_size_in").as_double() ,
       this->get_logger(),
       this->get_clock()
     );

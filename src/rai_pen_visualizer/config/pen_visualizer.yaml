@@ -1,6 +1,7 @@
 pen_visualizer:
   ros__parameters:
     canvas_frame_id: canvas
+    canvas_size_in: 20.0
     pen_frame_prefix: pen
     pen_state_topic_prefix: pen_state
     update_frequency: 20

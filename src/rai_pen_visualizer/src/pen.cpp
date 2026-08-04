@@ -1,6 +1,6 @@
 #include "rai_pen_visualizer/pen.hpp"
 
-Pen::Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logger, rclcpp::Clock::SharedPtr clock) : 
+Pen::Pen(std::string frame_id, std::string canvas_frame_id, double canvas_size, rclcpp::Logger logger, rclcpp::Clock::SharedPtr clock) : 
     frame_id_(frame_id), canvas_frame_id_(canvas_frame_id), logger_(logger), clock_(clock){
         tf2_buffer_ = std::make_unique<tf2_ros::Buffer>(clock);
         tf2_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf2_buffer_);
@@ -8,6 +8,7 @@ Pen::Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logge
         state_ = false;
         active_marker_ = false;
         marker_id_ = 0;
+        canvas_bound_ = canvas_size/2 * 0.0254;
 }
 
 std::optional<visualization_msgs::msg::Marker> Pen::generate_marker() {
@@ -42,6 +43,20 @@ std::optional<visualization_msgs::msg::Marker> Pen::generate_marker() {
         return std::nullopt;
     }
     last_transform_stamp_ = t.header.stamp;
+
+    if(std::abs(t.transform.translation.x) > canvas_bound_ || 
+        std::abs(t.transform.translation.y) > canvas_bound_){
+        if(!active_marker_){
+            return std::nullopt;
+        }
+        active_marker_ = false;
+        RCLCPP_INFO(logger_, "Out of bounds, Finished marker %i for %s", 
+            marker_id_, 
+            frame_id_.c_str()
+        );
+        marker_id_++;
+        return current_marker_;
+    }
 
     if(!active_marker_){
         current_marker_ = visualization_msgs::msg::Marker();
