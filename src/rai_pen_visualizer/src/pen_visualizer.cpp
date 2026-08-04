@@ -30,10 +30,8 @@ PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
 
 void PenVisualizer::timer_callback(){
   for(Pen& pen : pen_array_){
-    std::optional<visualization_msgs::msg::Marker> marker = pen.generate_marker(marker_count_);
+    std::optional<visualization_msgs::msg::Marker> marker = pen.generate_marker();
     if(marker.has_value()){
-      RCLCPP_INFO(this->get_logger(), "Publishing Marker %u", marker_count_);
-      marker_count_++;
       publish_marker(marker.value());
     }
   }

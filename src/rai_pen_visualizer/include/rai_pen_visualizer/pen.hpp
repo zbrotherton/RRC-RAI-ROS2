@@ -13,12 +13,13 @@
 #include "visualization_msgs/msg/marker.hpp"
 #include "std_msgs/msg/bool.hpp"
 #include "geometry_msgs/msg/transform_stamped.hpp"
+#include "geometry_msgs/msg/point.hpp"
 
 class Pen {
     public:
         Pen() : logger_(rclcpp::get_logger("")) {}
         Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logger, rclcpp::Clock::SharedPtr clock);
-        std::optional<visualization_msgs::msg::Marker> generate_marker(unsigned int marker_count);
+        std::optional<visualization_msgs::msg::Marker> generate_marker();
         void set_state(bool state){state_ = state;}
 
     private:
@@ -26,6 +27,9 @@ class Pen {
         std::unique_ptr<tf2_ros::Buffer> tf2_buffer_;
         rclcpp::Time last_transform_stamp_;
         bool state_;
+        bool active_marker_;
+        int marker_id_;
+        visualization_msgs::msg::Marker current_marker_;
         std::string frame_id_;
         std::string canvas_frame_id_;
         rclcpp::Logger logger_;

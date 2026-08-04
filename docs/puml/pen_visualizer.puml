@@ -43,21 +43,34 @@ partition "generate_marker" {
                 :log INFO "Duplicate Transform";
                 :return nullopt;
             else(false)
-                :Generate marker;
                 :Update last transform stamp;
-                :return marker;
+                if(Current marker active?) then (true)
+                else (false)
+                    :Create new marker without points;
+                    :Set active marker to true;
+                endif
+                :Update marker timestamp;
+                :Generate point;
+                :Add point to current marker;
+                :log INFO "Updating marker <id> for <frame_id>";
+                :return current marker;
             endif
         else (catch)
             :log WARN "Bad Transform Lookup";
             :return nullopt;
         endif
         else (up)
-            :return nullopt;
+            if(Current marker active?) then (true)
+                :Increment marker id;
+                :Set active marker to false;
+                :log INFO "Finished marker <id> for <frame_id>";
+                :return current marker;
+            else (false)
+                :return nullopt;
+            endif
         endif
     }
     if (Optional has value) then (true)
-        :log INFO "Publishing Marker <number>";
-        :Increment marker count;
         :Publish Marker;
     else (false)
     endif

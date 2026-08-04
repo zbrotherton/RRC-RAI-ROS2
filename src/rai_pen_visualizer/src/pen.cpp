@@ -6,13 +6,25 @@ Pen::Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logge
         tf2_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf2_buffer_);
         last_transform_stamp_ = rclcpp::Time();
         state_ = false;
+        active_marker_ = false;
+        marker_id_ = 0;
 }
 
-std::optional<visualization_msgs::msg::Marker> Pen::generate_marker(unsigned int marker_count) {
-    geometry_msgs::msg::TransformStamped t;
+std::optional<visualization_msgs::msg::Marker> Pen::generate_marker() {
     if(!state_){
-        return std::nullopt;
+        if(!active_marker_){
+            return std::nullopt;
+        }
+        marker_id_++;
+        active_marker_ = false;
+        RCLCPP_INFO(logger_, "Finished marker %i for %s", 
+            marker_id_, 
+            frame_id_.c_str()
+        );
+        return std::make_optional(current_marker_);
     }
+
+    geometry_msgs::msg::TransformStamped t;
     try {
         t = tf2_buffer_->lookupTransform(canvas_frame_id_, frame_id_, tf2::TimePointZero);
     }
@@ -24,44 +36,61 @@ std::optional<visualization_msgs::msg::Marker> Pen::generate_marker(unsigned int
         );
         return std::nullopt;
     }
+
     if(t.header.stamp == last_transform_stamp_){
         RCLCPP_INFO(logger_, "Duplicate transform, skipping");
         return std::nullopt;
     }
-    
     last_transform_stamp_ = t.header.stamp;
 
-    visualization_msgs::msg::Marker marker;
-    marker.header.frame_id = canvas_frame_id_;
-    marker.header.stamp = clock_->now();
+    if(!active_marker_){
+        current_marker_.header.frame_id = canvas_frame_id_;
 
-    marker.ns = "pen_visualizer";
-    marker.id = marker_count;
+        current_marker_.ns = frame_id_;
+        current_marker_.id = marker_id_;
 
-    marker.type = visualization_msgs::msg::Marker::CUBE;
+        current_marker_.type = visualization_msgs::msg::Marker::LINE_STRIP;
 
-    marker.action = visualization_msgs::msg::Marker::ADD;
+        current_marker_.action = visualization_msgs::msg::Marker::ADD;
 
-    marker.pose.position.x = t.transform.translation.x;
-    marker.pose.position.y = t.transform.translation.y;
-    marker.pose.position.z = -0.01;
-    marker.pose.orientation.x = t.transform.rotation.x;
-    marker.pose.orientation.y = t.transform.rotation.y;
-    marker.pose.orientation.z = t.transform.rotation.z;
-    marker.pose.orientation.w = t.transform.rotation.w;
+        current_marker_.pose.position.x = 0;
+        current_marker_.pose.position.y = 0;
+        current_marker_.pose.position.z = 0;
+        current_marker_.pose.orientation.x = 0;
+        current_marker_.pose.orientation.y = 0;
+        current_marker_.pose.orientation.z = 0;
+        current_marker_.pose.orientation.w = 1;
 
-    marker.scale.x = 0.001;
-    marker.scale.y = 0.001;
-    marker.scale.z = 0.001;
+        current_marker_.scale.x = 0.001;
+        current_marker_.scale.y = 0.001;
+        current_marker_.scale.z = 0.001;
 
-    marker.color.r = 0.0f;
-    marker.color.g = 1.0f;
-    marker.color.b = 0.0f;
-    marker.color.a = 1.0; 
+        current_marker_.color.r = 0.0f;
+        current_marker_.color.g = 1.0f;
+        current_marker_.color.b = 0.0f;
+        current_marker_.color.a = 1.0; 
 
-    marker.lifetime = rclcpp::Duration::from_nanoseconds(0);
+        current_marker_.lifetime = rclcpp::Duration::from_nanoseconds(0);
 
-    marker.frame_locked = true;
+        current_marker_.frame_locked = true;
 
-    return std::make_optional(marker);
+        active_marker_ = true;
+    }
+
+    current_marker_.header.stamp = clock_->now();
+    
+    geometry_msgs::msg::Point point;
+
+    point.x = t.transform.translation.x;
+    point.y = t.transform.translation.y;
+    point.z = -0.01;
+
+    current_marker_.points.push_back(point);
+
+    RCLCPP_INFO(logger_, "Updating marker %i for %s", 
+        marker_id_, 
+        frame_id_.c_str()
+    );
+
+    return std::make_optional(current_marker_);
 }
