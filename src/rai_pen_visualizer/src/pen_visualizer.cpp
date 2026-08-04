@@ -55,12 +55,6 @@ void PenVisualizer::timer_callback(){
         return;
     }
 
-    if(t.header.stamp == last_transform_stamp_){
-        RCLCPP_INFO(this->get_logger(), "Duplicate transform, skipping");
-        return;
-    }
-    last_transform_stamp_ = t.header.stamp;
-
     if(std::abs(t.transform.translation.x) > canvas_bound_ || 
         std::abs(t.transform.translation.y) > canvas_bound_){
         if(!pen.get_marker_active()){

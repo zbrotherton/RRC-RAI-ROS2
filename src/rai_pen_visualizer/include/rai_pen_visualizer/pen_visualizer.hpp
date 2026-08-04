@@ -27,7 +27,6 @@ class PenVisualizer : public rclcpp::Node {
         std::string canvas_frame_id_;
         std::shared_ptr<tf2_ros::TransformListener> tf2_listener_;
         std::unique_ptr<tf2_ros::Buffer> tf2_buffer_;
-        rclcpp::Time last_transform_stamp_;
 
         void timer_callback();
         void state_callback(int pen, const std_msgs::msg::Bool& msg);
