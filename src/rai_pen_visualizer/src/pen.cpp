@@ -83,7 +83,7 @@ std::optional<visualization_msgs::msg::Marker> Pen::generate_marker() {
         current_marker_.scale.z = 0.001;
 
         current_marker_.color.r = 0.0f;
-        current_marker_.color.g = 1.0f;
+        current_marker_.color.g = 0.0f;
         current_marker_.color.b = 0.0f;
         current_marker_.color.a = 1.0; 
 
