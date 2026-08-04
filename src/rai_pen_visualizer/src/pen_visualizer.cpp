@@ -40,6 +40,7 @@ void PenVisualizer::timer_callback(){
         }
         pen.finish_marker(this->get_logger(), false);
         publish_marker(pen.get_marker());
+        continue;
     }
 
     geometry_msgs::msg::TransformStamped t;
@@ -62,6 +63,7 @@ void PenVisualizer::timer_callback(){
         }
         pen.finish_marker(this->get_logger(), true);
         publish_marker(pen.get_marker());
+        continue;
     }
 
     if(!pen.get_marker_active()){

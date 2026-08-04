@@ -56,7 +56,7 @@ void Pen::finish_marker(const rclcpp::Logger& logger, bool out_of_bounds){
             frame_id_.c_str()
         );
     }
-    
+
     marker_id_++;
 }
 
