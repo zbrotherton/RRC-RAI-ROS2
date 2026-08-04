@@ -10,6 +10,7 @@ def generate_launch_description():
     use_sim = LaunchConfiguration('use_sim')
     use_mock_hardware = LaunchConfiguration('use_mock_hardware')
     headless_gazebo = LaunchConfiguration('headless_gazebo')
+    visualize_pens = LaunchConfiguration('visualize_pens')
 
     return LaunchDescription([
         # Launch Arguments
@@ -27,6 +28,11 @@ def generate_launch_description():
             'headless_gazebo',
             default_value='false',
             description='Run Gazebo physics only'
+        ),
+        DeclareLaunchArgument(
+            'visualize_pens',
+            default_value='true',
+            description='Visualize pens in Rviz'
         ),
 
         # Publishers & URDF
@@ -80,4 +86,17 @@ def generate_launch_description():
                 'use_sim': use_sim
             }.items()
         ),
+        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                [FindPackageShare('rai_pen_visualizer'),
+                  '/launch',
+                  '/pen_visualizer.launch.py'
+                ]
+            ),
+            launch_arguments={
+                'use_sim_time' : use_sim
+            }.items(),
+            condition=IfCondition(visualize_pens),
+        )
     ])
