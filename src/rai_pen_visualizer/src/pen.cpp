@@ -44,6 +44,8 @@ std::optional<visualization_msgs::msg::Marker> Pen::generate_marker() {
     last_transform_stamp_ = t.header.stamp;
 
     if(!active_marker_){
+        current_marker_ = visualization_msgs::msg::Marker();
+
         current_marker_.header.frame_id = canvas_frame_id_;
 
         current_marker_.ns = frame_id_;
