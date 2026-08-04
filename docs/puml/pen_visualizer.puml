@@ -5,12 +5,16 @@ class Pen{
     -tf2_buffer_ : std::unique_ptr<tf2_ros::Buffer>
     -last_transform_stamp_ : rclcpp::Time 
     -state_ : bool
+    -active_marker_ : bool
+    -marker_id_ : int
+    -canvas_bound_ : double
+    -current_marker_ : visualization_msgs/msg/Marker
     -frame_id_ : std::string
     -canvas_frame_id_ : std::string
     -logger_ : rclcpp::Logger
     -clock_ : rclcpp::Clock::SharedPtr
-    +set_state(bool state)
     +generate_marker(unsigned int marker_count) : std::optional<visualization_msgs/msg/Marker>
+    +set_state(bool state)
 }
 
 class PenVisualizer{
@@ -21,6 +25,7 @@ class PenVisualizer{
     -publish_marker(visualization_msgs/msg/Marker marker)
     .. Parameters ..
     +canvas_frame_id
+    +canvas_size_in
     +pen_frame_prefix
     +pen_state_topic_prefix
     +update_frequency
