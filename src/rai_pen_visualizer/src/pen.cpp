@@ -5,10 +5,14 @@ Pen::Pen(std::string frame_id, std::string canvas_frame_id, rclcpp::Logger logge
         tf2_buffer_ = std::make_unique<tf2_ros::Buffer>(clock);
         tf2_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf2_buffer_);
         last_transform_stamp_ = rclcpp::Time();
+        state_ = false;
 }
 
 std::optional<visualization_msgs::msg::Marker> Pen::generate_marker(unsigned int marker_count) {
     geometry_msgs::msg::TransformStamped t;
+    if(!state_){
+        return std::nullopt;
+    }
     try {
         t = tf2_buffer_->lookupTransform(canvas_frame_id_, frame_id_, tf2::TimePointZero);
     }

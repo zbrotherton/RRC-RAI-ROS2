@@ -3,3 +3,4 @@ pen_visualizer:
     canvas_frame_id: canvas
     pen_frame_prefix: pen
     pen_state_topic_prefix: pen_state
+    update_frequency: 20

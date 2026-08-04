@@ -3,7 +3,8 @@
 PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
   this->declare_parameter("canvas_frame_id", "canvas");
   this->declare_parameter("pen_frame_prefix", "pen");
-  this->declare_parameter("pen_state_topic_prefix", "pen_state"); 
+  this->declare_parameter("pen_state_topic_prefix", "pen_state");
+  this->declare_parameter("update_frequency", 20);
 
   for(int i = 0; i < 4; i++){
     std::string id = std::to_string(i + 1);
@@ -22,16 +23,22 @@ PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
     );
   }
 
+  timer_ = this->create_wall_timer(1.0s/this->get_parameter("update_frequency").as_int(), std::bind(&PenVisualizer::timer_callback, this));
+
   marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("pen_marker", 1);
 }
 
-void PenVisualizer::state_callback(int pen, const std_msgs::msg::Bool& msg) {
-  if(msg.data){
-    std::optional<visualization_msgs::msg::Marker> marker = pen_array_.at(pen).generate_marker(marker_count_);
+void PenVisualizer::timer_callback(){
+  for(Pen& pen : pen_array_){
+    std::optional<visualization_msgs::msg::Marker> marker = pen.generate_marker(marker_count_);
     if(marker.has_value()){
       RCLCPP_INFO(this->get_logger(), "Publishing Marker %u", marker_count_);
       marker_count_++;
       publish_marker(marker.value());
     }
   }
+}
+
+void PenVisualizer::state_callback(int pen, const std_msgs::msg::Bool& msg) {
+  pen_array_.at(pen).set_state(msg.data);
 }
