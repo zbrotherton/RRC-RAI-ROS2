@@ -44,6 +44,7 @@ void Pen::initialize_marker(const std::string& canvas_frame){
 
 void Pen::finish_marker(const rclcpp::Logger& logger, bool out_of_bounds){
     marker_active_ = false;
+
     if(out_of_bounds){
         RCLCPP_INFO(logger, "Out of bounds, Finished marker %i for %s", 
             marker_id_, 
@@ -55,6 +56,7 @@ void Pen::finish_marker(const rclcpp::Logger& logger, bool out_of_bounds){
             frame_id_.c_str()
         );
     }
+    
     marker_id_++;
 }
 

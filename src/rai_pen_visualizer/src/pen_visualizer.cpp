@@ -36,7 +36,7 @@ void PenVisualizer::timer_callback(){
   for(Pen& pen : pen_array_){
     if(!pen.get_state()){
         if(!pen.get_marker_active()){
-            return;
+            continue;
         }
         pen.finish_marker(this->get_logger(), false);
         publish_marker(pen.get_marker());
@@ -52,13 +52,13 @@ void PenVisualizer::timer_callback(){
             pen.get_frame_id().c_str(),
             ex.what()
         );
-        return;
+        continue;
     }
 
     if(std::abs(t.transform.translation.x) > canvas_bound_ || 
         std::abs(t.transform.translation.y) > canvas_bound_){
         if(!pen.get_marker_active()){
-            return;
+            continue;
         }
         pen.finish_marker(this->get_logger(), true);
         publish_marker(pen.get_marker());
