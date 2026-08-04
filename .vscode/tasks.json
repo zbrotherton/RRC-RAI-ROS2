@@ -28,7 +28,11 @@
 				"build",
 				"--symlink-install",
 				"--cmake-args",
-				"-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+				"-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+				"-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+				"--no-warn-unused-cli",
+				"-DCMAKE_CXX_STANDARD=17", 
+				"-DCMAKE_CXX_STANDARD_REQUIRED=ON"
 			],
 			"label": "colcon: Colcon Build Test",
 			"problemMatcher": [],
@@ -43,7 +47,11 @@
 				"build",
 				"--symlink-install",
 				"--cmake-args",
-				"-DCMAKE_BUILD_TYPE=Debug"
+				"-DCMAKE_BUILD_TYPE=Debug",
+				"-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+				"--no-warn-unused-cli",
+				"-DCMAKE_CXX_STANDARD=17", 
+				"-DCMAKE_CXX_STANDARD_REQUIRED=ON"
 			],
 			"problemMatcher": [
 				"$colcon-gcc"
