@@ -22,7 +22,6 @@ class PenVisualizer : public rclcpp::Node {
     private:
         std::array<Pen, 4> pen_array_;
 
-        unsigned int marker_count_;
         double canvas_bound_;
         std::string canvas_frame_id_;
         std::shared_ptr<tf2_ros::TransformListener> tf2_listener_;

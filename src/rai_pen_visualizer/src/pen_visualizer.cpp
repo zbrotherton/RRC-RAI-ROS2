@@ -1,6 +1,6 @@
 #include "rai_pen_visualizer/pen_visualizer.hpp"
 
-PenVisualizer::PenVisualizer() : Node("pen_visualizer"), marker_count_(0) {
+PenVisualizer::PenVisualizer() : Node("pen_visualizer") {
   this->declare_parameter("canvas_frame_id", "canvas");
   this->declare_parameter("pen_frame_prefix", "pen");
   this->declare_parameter("canvas_size_in", 20.0);
